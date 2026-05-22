@@ -1,0 +1,766 @@
+/* Hotel Authentication Stylesheet */
+/* Add these styles to HotelAuth.css */
+
+/* Badges */
+.badge {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Step Titles */
+.step-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.step-title i {
+  color: #667eea;
+}
+
+/* Progress Steps */
+.hotel-progress {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  padding: 0 20px;
+}
+
+.hotel-progress-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: #9ca3af;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.hotel-progress-step.active {
+  color: #667eea;
+}
+
+.step-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #f3f4f6;
+  border: 2px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.hotel-progress-step.active .step-circle {
+  background: #667eea;
+  border-color: #667eea;
+  color: white;
+}
+
+.step-circle.completed {
+  background: #10b981;
+  border-color: #10b981;
+  color: white;
+}
+
+.hotel-progress-line {
+  flex: 1;
+  height: 2px;
+  background: #e5e7eb;
+  margin: 0 10px;
+}
+
+/* Phone Input */
+.hotel-phone-input {
+  display: flex;
+  gap: 10px;
+}
+
+.phone-code {
+  padding: 12px;
+  background: #f3f4f6;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  white-space: nowrap;
+}
+
+.hotel-phone-input input {
+  flex: 1;
+}
+
+/* Password Strength */
+.password-strength {
+  margin-top: 8px;
+}
+
+.strength-bar {
+  height: 4px;
+  background: #e5e7eb;
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+.strength-fill {
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+/* Info Alert */
+.info-alert {
+  background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%);
+  border-left: 4px solid #3b82f6;
+  padding: 16px;
+  border-radius: 12px;
+  margin: 20px 0;
+  display: flex;
+  gap: 12px;
+}
+
+.info-alert i {
+  color: #3b82f6;
+  font-size: 20px;
+}
+
+.info-alert div {
+  flex: 1;
+}
+
+.info-alert strong {
+  display: block;
+  margin-bottom: 8px;
+  color: #1e293b;
+}
+
+.info-alert p {
+  margin: 4px 0;
+  font-size: 13px;
+  color: #475569;
+}
+
+/* Checkbox Label */
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-weight: normal;
+}
+
+.checkbox-label input {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.checkbox-label span {
+  font-size: 14px;
+  color: #374151;
+}
+
+.checkbox-label a {
+  color: #667eea;
+  text-decoration: none;
+  margin: 0 4px;
+}
+
+.checkbox-label a:hover {
+  text-decoration: underline;
+}
+
+/* Form Buttons */
+.hotel-form-buttons {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.hotel-btn-primary,
+.hotel-btn-secondary {
+  flex: 1;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.hotel-btn-primary {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+}
+
+.hotel-btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.hotel-btn-secondary {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.hotel-btn-secondary:hover {
+  background: #e5e7eb;
+}
+
+.hotel-btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Hint Text */
+.hotel-hint {
+  display: block;
+  font-size: 11px;
+  color: #9ca3af;
+  margin-top: 5px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.step1, .step2, .step3 {
+  animation: fadeIn 0.4s ease;
+}
+
+/* Required Field */
+.required {
+  color: #ef4444;
+  margin-left: 3px;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .hotel-progress {
+    padding: 0;
+  }
+  
+  .hotel-progress-step span {
+    font-size: 10px;
+  }
+  
+  .step-circle {
+    width: 32px;
+    height: 32px;
+    font-size: 12px;
+  }
+  
+  .hotel-form-buttons {
+    flex-direction: column;
+  }
+  
+  .hotel-phone-input {
+    flex-direction: column;
+  }
+  
+  .phone-code {
+    text-align: center;
+  }
+  
+  .info-alert {
+    flex-direction: column;
+  }
+  
+  .badges {
+    flex-wrap: wrap;
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Container */
+.hotel-auth-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Animated Background */
+.hotel-auth-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+}
+
+.animated-pattern {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(45deg, rgba(255,255,255,0.08) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(255,255,255,0.08) 25%, transparent 25%);
+  background-size: 60px 60px;
+  animation: movePattern 20s linear infinite;
+}
+
+@keyframes movePattern {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(60px, 60px); }
+}
+
+.floating-shapes {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.shape {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.1;
+  animation: floatShape 20s infinite ease-in-out;
+}
+
+.shape-1 { top: 10%; left: 5%; width: 300px; height: 300px; background: white; animation-delay: 0s; }
+.shape-2 { bottom: 10%; right: 5%; width: 400px; height: 400px; background: white; animation-delay: 5s; }
+.shape-3 { top: 50%; left: 50%; width: 250px; height: 250px; background: white; animation-delay: 10s; }
+.shape-4 { bottom: 20%; left: 20%; width: 200px; height: 200px; background: white; animation-delay: 15s; }
+
+@keyframes floatShape {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(30px, -30px) rotate(120deg); }
+  66% { transform: translate(-20px, 20px) rotate(240deg); }
+}
+
+/* Auth Card */
+.hotel-auth-card {
+  background: white;
+  border-radius: 32px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  width: 500px;
+  max-width: 100%;
+  padding: 48px 40px;
+  position: relative;
+  z-index: 1;
+  animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Header */
+.hotel-auth-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.hotel-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.hotel-logo .logo-icon {
+  font-size: 48px;
+}
+
+.hotel-logo h1 {
+  font-size: 28px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+}
+
+.hotel-subtitle {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/* Toggle Buttons */
+.hotel-toggle {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 32px;
+  background: #f3f4f6;
+  padding: 6px;
+  border-radius: 16px;
+}
+
+.hotel-toggle-btn {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  background: transparent;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  color: #6b7280;
+}
+
+.hotel-toggle-btn.active {
+  background: white;
+  color: #667eea;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.hotel-toggle-btn:hover:not(.active) {
+  background: rgba(102, 126, 234, 0.1);
+  color: #667eea;
+}
+
+/* Form Styles */
+.hotel-form-wrapper {
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.hotel-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.hotel-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hotel-form-group label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.hotel-form-group input {
+  padding: 12px 14px;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  background: #f9fafb;
+  width: 100%;
+}
+
+.hotel-form-group input:focus {
+  outline: none;
+  border-color: #667eea;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.hotel-form-group input.error {
+  border-color: #ef4444;
+}
+
+/* Password Input */
+.hotel-password-input {
+  position: relative;
+}
+
+.hotel-password-input input {
+  padding-right: 44px;
+}
+
+.hotel-toggle-password {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: #9ca3af;
+}
+
+/* Error Message */
+.hotel-error {
+  font-size: 12px;
+  color: #ef4444;
+  margin-top: 4px;
+}
+
+/* Alerts */
+.hotel-alert {
+  padding: 12px 16px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  margin-bottom: 20px;
+  animation: shake 0.4s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+.hotel-alert.error {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fee2e2;
+}
+
+.hotel-alert.success {
+  background: #f0fdf4;
+  color: #16a34a;
+  border: 1px solid #dcfce7;
+  animation: none;
+}
+
+/* Submit Button */
+.hotel-submit-btn {
+  padding: 14px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.hotel-submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px -5px rgba(102, 126, 234, 0.4);
+}
+
+.hotel-submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Form Options */
+.hotel-form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+}
+
+.hotel-forgot-link {
+  background: none;
+  border: none;
+  color: #667eea;
+  cursor: pointer;
+  font-size: 13px;
+  transition: color 0.3s ease;
+}
+
+.hotel-forgot-link:hover {
+  color: #764ba2;
+  text-decoration: underline;
+}
+
+/* OTP Inputs */
+.hotel-otp-inputs {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.hotel-otp-input {
+  width: 55px;
+  height: 55px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  background: #f9fafb;
+}
+
+.hotel-otp-input:focus {
+  outline: none;
+  border-color: #667eea;
+  background: white;
+}
+
+.hotel-resend {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.hotel-resend-btn {
+  background: none;
+  border: none;
+  color: #667eea;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.hotel-timer {
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+/* Forgot Password Page */
+.hotel-forgot-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  padding: 20px;
+}
+
+.hotel-forgot-card {
+  background: white;
+  padding: 40px;
+  border-radius: 24px;
+  width: 450px;
+  max-width: 100%;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.hotel-forgot-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.hotel-forgot-header h2 {
+  font-size: 28px;
+  color: #1f2937;
+  margin-bottom: 10px;
+}
+
+.hotel-forgot-header p {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.hotel-back-btn {
+  background: none;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #667eea;
+  cursor: pointer;
+  font-size: 14px;
+  margin-bottom: 20px;
+  transition: transform 0.3s ease;
+}
+
+.hotel-back-btn:hover {
+  color: #764ba2;
+  transform: translateX(-3px);
+}
+
+/* Footer */
+.hotel-auth-footer {
+  text-align: center;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.hotel-auth-footer p {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.hotel-auth-footer button {
+  background: none;
+  border: none;
+  color: #667eea;
+  font-weight: 600;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.hotel-auth-footer button:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .hotel-auth-card {
+    padding: 32px 24px;
+  }
+  
+  .hotel-otp-input {
+    width: 45px;
+    height: 45px;
+    font-size: 20px;
+  }
+  
+  .hotel-toggle-btn {
+    padding: 10px;
+    font-size: 13px;
+  }
+  
+  .hotel-logo h1 {
+    font-size: 24px;
+  }
+  
+  .hotel-forgot-card {
+    padding: 30px 20px;
+  }
+}
