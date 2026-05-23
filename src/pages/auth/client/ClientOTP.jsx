@@ -56,7 +56,7 @@ const ClientOTP = () => {
     setSuccess("");
 
     try {
-      const response = await fetch('http://localhost:5001/api/client/verify', {
+      const response = await fetch('https://rhms-backend.onrender.com/api/client/verify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, code: otpCode })
@@ -65,7 +65,7 @@ const ClientOTP = () => {
       const data = await response.json();
       
       if (response.ok) {
-        setSuccess("Email verified successfully! Redirecting to login...");
+        setSuccess("Email verified successfully!");
         localStorage.removeItem("pendingVerificationEmail");
         setTimeout(() => {
           navigate("/client/auth");
@@ -89,7 +89,7 @@ const ClientOTP = () => {
     setSuccess("");
     
     try {
-      const response = await fetch('http://localhost:5001/api/client/resend-verification', {
+      const response = await fetch('https://rhms-backend.onrender.com/api/client/resend-verification', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })

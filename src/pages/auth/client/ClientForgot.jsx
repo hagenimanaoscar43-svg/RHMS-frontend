@@ -27,7 +27,7 @@ const ClientForgot = () => {
     setSuccess("");
 
     try {
-      const response = await fetch('http://localhost:5001/api/client/forgot-password', {
+      const response = await fetch('https://rhms-backend.onrender.com/api/client/forgot-password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -39,7 +39,7 @@ const ClientForgot = () => {
       console.log("Forgot password response:", data);
 
       if (response.ok) {
-        setSuccess("OTP code sent to your email! Redirecting to verification...");
+        setSuccess("OTP code sent to your email!");
         localStorage.setItem("resetEmail", email);
         setTimeout(() => {
           navigate("/client/verify-reset-otp", { 

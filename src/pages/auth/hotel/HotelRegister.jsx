@@ -187,7 +187,7 @@ const HotelRegister = () => {
     setSuccess("");
     
     try {
-      const response = await fetch('http://localhost:5001/api/hotel/register', {
+      const response = await fetch('https://rhms-backend.onrender.com/api/hotel/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

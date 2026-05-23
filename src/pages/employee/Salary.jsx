@@ -25,7 +25,7 @@ const Salary = () => {
   const fetchSalaryData = async () => {
     try {
       const response = await fetch(
-        "http://localhost:5001/api/employee/salary",
+        "https://rhms-backend.onrender.com/api/employee/salary",
         {
           headers: {
             Authorization: `Bearer ${token}`,

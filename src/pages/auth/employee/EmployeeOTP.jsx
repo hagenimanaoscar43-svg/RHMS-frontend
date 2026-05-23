@@ -51,7 +51,7 @@ const EmployeeOTP = () => {
     
     try {
       // Actual API call for login 2FA
-      const response = await fetch('http://localhost:5001/api/employee/verify-otp', {
+      const response = await fetch('https://rhms-backend.onrender.com/api/employee/verify-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ user_id: userId, otp: otpCode })

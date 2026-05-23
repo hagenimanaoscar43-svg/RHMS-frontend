@@ -27,7 +27,7 @@ const HotelForgot = () => {
     setSuccess("");
 
     try {
-      const response = await fetch('http://localhost:5001/api/hotel/forgot-password', {
+      const response = await fetch('https://rhms-backend.onrender.com/api/hotel/forgot-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })

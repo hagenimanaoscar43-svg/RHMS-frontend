@@ -74,7 +74,7 @@ const ClientRegister = () => {
     setSuccess("");
     
     try {
-      const response = await fetch('http://localhost:5001/api/client/register', {
+      const response = await fetch('https://rhms-backend.onrender.com/api/client/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

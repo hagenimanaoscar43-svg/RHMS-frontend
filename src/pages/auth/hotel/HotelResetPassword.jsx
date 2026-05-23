@@ -73,7 +73,7 @@ const HotelResetPassword = () => {
     setSuccess("");
 
     try {
-      const response = await fetch('http://localhost:5001/api/hotel/reset-password', {
+      const response = await fetch('https://rhms-backend.onrender.com/api/hotel/reset-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token, new_password: newPassword })

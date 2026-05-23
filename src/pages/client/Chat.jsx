@@ -26,7 +26,7 @@ const GuestChat = () => {
 
   const loadHotelInfo = async () => {
     try {
-      const response = await fetch("http://localhost:5001/api/client/hotel-info", {
+      const response = await fetch("https://rhms-backend.onrender.com/api/client/hotel-info", {
         headers: { "Authorization": `Bearer ${token}` }
       });
       if (response.ok) {
@@ -40,7 +40,7 @@ const GuestChat = () => {
 
   const loadMessages = async () => {
     try {
-      const response = await fetch("http://localhost:5001/api/client/chat/messages", {
+      const response = await fetch("https://rhms-backend.onrender.com/api/client/chat/messages", {
         headers: { "Authorization": `Bearer ${token}` }
       });
       
@@ -72,7 +72,7 @@ const GuestChat = () => {
     setText("");
 
     try {
-      await fetch("http://localhost:5001/api/client/chat/send", {
+      await fetch("https://rhms-backend.onrender.com/api/client/chat/send", {
         method: "POST",
         headers: { 
           "Authorization": `Bearer ${token}`,

@@ -29,7 +29,7 @@ const RdbLogin = () => {
     }
 
     try {
-      const res = await fetch("http://localhost:5001/api/rdb/login", {
+      const res = await fetch("https://rhms-backend.onrender.com/api/rdb/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -48,7 +48,7 @@ const RdbLogin = () => {
         localStorage.setItem("rdbUser", JSON.stringify(data.user));
         localStorage.setItem("userRole", "rdb");
         
-        setSuccess("Login successful! Redirecting...");
+        setSuccess("Login successful!");
         
         setTimeout(() => {
           navigate("/rdb/dashboard");

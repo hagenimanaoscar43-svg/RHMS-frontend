@@ -60,7 +60,7 @@ const EmployeeVerifyLoginOTP = () => {
     setSuccess("");
 
     try {
-      const response = await fetch('http://localhost:5001/api/employee/verify-otp', {
+      const response = await fetch('https://rhms-backend.onrender.com/api/employee/verify-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ user_id: userId, otp: otpCode })
@@ -83,7 +83,7 @@ const EmployeeVerifyLoginOTP = () => {
           navigate("/employee/dashboard");
         }, 1500);
       } else {
-        setError(data.error || "Invalid 2FA code. Please try again.");
+        setError(data.error || "Invalid code. Please try again.");
         setOtp(["", "", "", "", "", ""]);
         document.getElementById("otp-0")?.focus();
       }
@@ -103,7 +103,7 @@ const EmployeeVerifyLoginOTP = () => {
     setSuccess("");
     
     try {
-      const response = await fetch('http://localhost:5001/api/employee/resend-login-otp', {
+      const response = await fetch('https://rhms-backend.onrender.com/api/employee/resend-login-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })

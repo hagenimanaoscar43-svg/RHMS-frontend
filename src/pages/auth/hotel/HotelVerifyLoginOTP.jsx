@@ -51,7 +51,7 @@ const HotelVerifyLoginOTP = () => {
     setSuccess("");
 
     try {
-      const response = await fetch('http://localhost:5001/api/hotel/verify-otp', {
+      const response = await fetch('https://rhms-backend.onrender.com/api/hotel/verify-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ user_id: userId, otp: otp })
@@ -92,7 +92,7 @@ const HotelVerifyLoginOTP = () => {
     setSuccess("");
     
     try {
-      const response = await fetch('http://localhost:5001/api/hotel/resend-login-otp', {
+      const response = await fetch('https://rhms-backend.onrender.com/api/hotel/resend-login-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })

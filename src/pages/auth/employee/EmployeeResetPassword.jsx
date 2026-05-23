@@ -43,7 +43,7 @@ const EmployeeResetPassword = () => {
     setError("");
     
     try {
-      const response = await fetch('http://localhost:5001/api/employee/reset-password', {
+      const response = await fetch('https://rhms-backend.onrender.com/api/employee/reset-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token, new_password: newPassword })
@@ -52,7 +52,7 @@ const EmployeeResetPassword = () => {
       const data = await response.json();
       
       if (response.ok) {
-        setSuccess("Password reset successful! Redirecting to login...");
+        setSuccess("Password reset successful!!");
         setTimeout(() => navigate('/employee/login'), 2000);
       } else {
         setError(data.error || "Failed to reset password");

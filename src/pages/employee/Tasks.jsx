@@ -16,7 +16,7 @@ const Tasks = () => {
 
   const loadTasks = async () => {
     try {
-      const response = await fetch("http://localhost:5001/api/employee/tasks", {
+      const response = await fetch("https://rhms-backend.onrender.com/api/employee/tasks", {
         headers: { "Authorization": `Bearer ${token}` }
       });
       
@@ -34,7 +34,7 @@ const Tasks = () => {
 
   const updateTaskStatus = async (taskId, status) => {
     try {
-      const response = await fetch(`http://localhost:5001/api/employee/tasks/${taskId}/status`, {
+      const response = await fetch(`https://rhms-backend.onrender.com/api/employee/tasks/${taskId}/status`, {
         method: "PUT",
         headers: {
           "Authorization": `Bearer ${token}`,

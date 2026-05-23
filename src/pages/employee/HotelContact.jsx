@@ -22,7 +22,7 @@ const HotelContact = () => {
             setLoading(true);
             setError(null);
             
-            const response = await fetch('http://localhost:5001/api/employee/hotel-contact', {
+            const response = await fetch('https://rhms-backend.onrender.com/api/employee/hotel-contact', {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'

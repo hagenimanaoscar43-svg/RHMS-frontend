@@ -22,7 +22,7 @@ const EmployeeAttendance = () => {
             
             // ✅ Use EMPLOYEE endpoint, not HOTEL endpoint
             const response = await fetch(
-                `http://localhost:5001/api/employee/attendance?date=${selectedDate}`,
+                `https://rhms-backend.onrender.com/api/employee/attendance?date=${selectedDate}`,
                 {
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -60,7 +60,7 @@ const EmployeeAttendance = () => {
     
     const handleClockIn = async () => {
         try {
-            const response = await fetch('http://localhost:5001/api/employee/clock-in', {
+            const response = await fetch('https://rhms-backend.onrender.com/api/employee/clock-in', {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,

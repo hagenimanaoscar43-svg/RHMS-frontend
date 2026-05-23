@@ -52,7 +52,7 @@ const NewBooking = () => {
     const loadHotels = async () => {
       try {
         setLoading(true);
-        const response = await fetch("http://localhost:5001/api/client/hotels", {
+        const response = await fetch("https://rhms-backend.onrender.com/api/client/hotels", {
           headers: { "Authorization": `Bearer ${token}` }
         });
         
@@ -92,7 +92,7 @@ const NewBooking = () => {
 
   const loadRooms = async () => {
     try {
-      const response = await fetch(`http://localhost:5001/api/client/hotels/${formData.hotelId}/rooms`, {
+      const response = await fetch(`https://rhms-backend.onrender.com/api/client/hotels/${formData.hotelId}/rooms`, {
         headers: { "Authorization": `Bearer ${token}` }
       });
       
@@ -211,7 +211,7 @@ const NewBooking = () => {
 
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:5001/api/client/bookings", {
+      const response = await fetch("https://rhms-backend.onrender.com/api/client/bookings", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -23,7 +23,7 @@ const HotelOTP = () => {
     setError("");
 
     try {
-      const response = await fetch('http://localhost:5001/api/hotel/verify', {
+      const response = await fetch('https://rhms-backend.onrender.com/api/hotel/verify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, code: otp })

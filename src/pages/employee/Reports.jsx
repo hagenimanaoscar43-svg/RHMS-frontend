@@ -37,7 +37,7 @@ const Reports = () => {
       setError(null);
 
       const response = await fetch(
-        "http://localhost:5001/api/employee/reports",
+        "https://rhms-backend.onrender.com/api/employee/reports",
         {
           method: "GET",
           headers: {
@@ -72,7 +72,7 @@ const Reports = () => {
       const report = reports.find((r) => r.id === reportId);
 
       const response = await fetch(
-        `http://localhost:5001/api/employee/reports/${reportId}/download`,
+        `https://rhms-backend.onrender.com/api/employee/reports/${reportId}/download`,
         {
           method: "GET",
           headers: {

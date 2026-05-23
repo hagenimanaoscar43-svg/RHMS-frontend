@@ -27,7 +27,7 @@ const MyBookings = () => {
 
   const fetchBookings = async () => {
     try {
-      const response = await fetch("http://localhost:5001/api/client/bookings", {
+      const response = await fetch("https://rhms-backend.onrender.com/api/client/bookings", {
         headers: { "Authorization": `Bearer ${token}` }
       });
       

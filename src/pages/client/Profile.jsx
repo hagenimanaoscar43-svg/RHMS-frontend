@@ -43,7 +43,7 @@ export default function Profile() {
         }
         
         // Fetch real data from backend
-        const response = await fetch('http://localhost:5001/api/user/profile', {
+        const response = await fetch('https://rhms-backend.onrender.com/api/user/profile', {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
@@ -108,7 +108,7 @@ export default function Profile() {
       
       console.log('Sending update:', updateData);
       
-      const response = await fetch('http://localhost:5001/api/user/profile', {
+      const response = await fetch('https://rhms-backend.onrender.com/api/user/profile', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -157,7 +157,7 @@ export default function Profile() {
         return;
       }
       
-      const response = await fetch('http://localhost:5001/api/user/change-password', {
+      const response = await fetch('https://rhms-backend.onrender.com/api/user/change-password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -204,7 +204,7 @@ export default function Profile() {
           try {
             const token = getToken();
             if (token) {
-              const response = await fetch('http://localhost:5001/api/user/profile', {
+              const response = await fetch('https://rhms-backend.onrender.com/api/user/profile', {
                 method: 'PUT',
                 headers: {
                   'Content-Type': 'application/json',
@@ -235,7 +235,7 @@ export default function Profile() {
       const token = getToken();
       if (!token) return;
       
-      const response = await fetch('http://localhost:5001/api/user/profile', {
+      const response = await fetch('http://localhost:5001/https://rhms-backend.onrender.com/api/user/profile', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'

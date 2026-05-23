@@ -27,7 +27,7 @@ const EmployeeForgot = () => {
     setSuccess("");
 
     try {
-      const res = await fetch("http://localhost:5001/api/employee/forgot-password", {
+      const res = await fetch("https://rhms-backend.onrender.com/api/employee/forgot-password", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

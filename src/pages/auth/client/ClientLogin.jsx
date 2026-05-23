@@ -23,7 +23,7 @@ const ClientLogin = () => {
     setError("");
     
     try {
-      const response = await fetch('http://localhost:5001/api/client/login', {
+      const response = await fetch('https://rhms-backend.onrender.com/api/client/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })

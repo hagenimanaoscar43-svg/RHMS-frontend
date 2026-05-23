@@ -70,7 +70,7 @@ const ClientVerifyLoginOTP = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:5001/api/client/verify-otp",
+        "https://rhms-backend.onrender.com/api/client/verify-otp",
         {
           method: "POST",
           headers: {
@@ -126,7 +126,7 @@ const ClientVerifyLoginOTP = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:5001/api/client/resend-login-otp",
+        "https://rhms-backend.onrender.com/api/client/resend-login-otp",
         {
           method: "POST",
           headers: {

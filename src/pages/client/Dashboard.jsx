@@ -509,7 +509,7 @@ const ClientDashboardHome = () => {
         });
 
         if (token) {
-          const response = await fetch("http://localhost:5001/api/client/bookings", {
+          const response = await fetch("https://rhms-backend.onrender.com/api/client/bookings", {
             headers: { Authorization: `Bearer ${token}` }
           });
 
@@ -526,7 +526,7 @@ const ClientDashboardHome = () => {
         }
 
         // Load featured hotels
-        const hotelsResponse = await fetch("http://localhost:5001/api/client/hotels");
+        const hotelsResponse = await fetch("https://rhms-backend.onrender.com/api/client/hotels");
         const hotels = hotelsResponse.ok ? await hotelsResponse.json() : [];
         setFeaturedHotels(hotels.slice(0, 3));
 
@@ -899,7 +899,7 @@ const BrowseHotels = () => {
   useEffect(() => {
     const loadHotels = async () => {
       try {
-        const res = await fetch("http://localhost:5001/api/client/hotels");
+        const res = await fetch("https://rhms-backend.onrender.com/api/client/hotels");
         const data = res.ok ? await res.json() : [];
         setHotels(data);
       } catch (err) {

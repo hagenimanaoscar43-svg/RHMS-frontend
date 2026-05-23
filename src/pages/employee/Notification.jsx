@@ -19,7 +19,7 @@ const Notification = () => {
   const loadNotifications = async () => {
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:5001/api/employee/notifications", {
+      const response = await fetch("https://rhms-backend.onrender.com/api/employee/notifications", {
         headers: { "Authorization": `Bearer ${token}` }
       });
       
@@ -38,7 +38,7 @@ const Notification = () => {
 
   const markAsRead = async (id) => {
     try {
-      await fetch(`http://localhost:5001/api/employee/notifications/${id}/read`, {
+      await fetch(`https://rhms-backend.onrender.com/api/employee/notifications/${id}/read`, {
         method: "PUT",
         headers: { "Authorization": `Bearer ${token}` }
       });
