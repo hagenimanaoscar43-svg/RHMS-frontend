@@ -40,7 +40,7 @@ const Dashboard = () => {
       if (!token) return;
       
       try {
-        const response = await fetch("http://localhost:5001/api/hotel/bookings/counts", {
+        const response = await fetch("https://rhms-backend.onrender.com/api/hotel/bookings/counts", {
           headers: { "Authorization": `Bearer ${token}` }
         });
         

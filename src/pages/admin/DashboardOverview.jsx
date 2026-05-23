@@ -48,7 +48,7 @@ const DashboardOverview = () => {
 
   const fetchStats = async () => {
     try {
-      const response = await fetch("http://localhost:5001/api/hotel/stats", {
+      const response = await fetch("https://rhms-backend.onrender.com/api/hotel/stats", {
         headers: { "Authorization": `Bearer ${token}` }
       });
       
@@ -73,7 +73,7 @@ const DashboardOverview = () => {
 
   const fetchRecentActivities = async () => {
     try {
-      const response = await fetch("http://localhost:5001/api/hotel/recent-activities", {
+      const response = await fetch("https://rhms-backend.onrender.com/api/hotel/recent-activities", {
         headers: { "Authorization": `Bearer ${token}` }
       });
       

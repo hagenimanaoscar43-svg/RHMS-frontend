@@ -235,7 +235,7 @@ export default function Profile() {
       const token = getToken();
       if (!token) return;
       
-      const response = await fetch('http://localhost:5001/https://rhms-backend.onrender.com/api/user/profile', {
+      const response = await fetch('https://rhms-backend.onrender.com/https://rhms-backend.onrender.com/api/user/profile', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'

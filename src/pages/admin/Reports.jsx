@@ -26,7 +26,7 @@ const Reports = () => {
     setError(null);
     try {
       // Fetch hotel stats
-      const statsResponse = await fetch("http://localhost:5001/api/hotel/stats", {
+      const statsResponse = await fetch("https://rhms-backend.onrender.com/api/hotel/stats", {
         headers: { "Authorization": `Bearer ${token}` }
       });
       
@@ -39,7 +39,7 @@ const Reports = () => {
       const statsData = await statsResponse.json();
       
       // Fetch bookings for revenue calculation
-      const bookingsResponse = await fetch("http://localhost:5001/api/hotel/bookings", {
+      const bookingsResponse = await fetch("https://rhms-backend.onrender.com/api/hotel/bookings", {
         headers: { "Authorization": `Bearer ${token}` }
       });
       
@@ -54,7 +54,7 @@ const Reports = () => {
       const totalGuests = confirmedBookings.length;
       
       // Calculate occupancy from rooms
-      const roomsResponse = await fetch("http://localhost:5001/api/hotel/rooms", {
+      const roomsResponse = await fetch("https://rhms-backend.onrender.com/api/hotel/rooms", {
         headers: { "Authorization": `Bearer ${token}` }
       });
       

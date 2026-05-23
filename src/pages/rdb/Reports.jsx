@@ -38,7 +38,7 @@ const Reports = () => {
     
     try {
       // Fetch dashboard stats
-      const statsResponse = await fetch("http://localhost:5001/api/rdb/stats", {
+      const statsResponse = await fetch("https://rhms-backend.onrender.com/api/rdb/stats", {
         headers: { "Authorization": `Bearer ${token}` }
       });
       
@@ -115,7 +115,7 @@ const Reports = () => {
   const loadHotelsData = async () => {
     try {
       // Fetch all hotels (approved and pending)
-      const response = await fetch("http://localhost:5001/api/rdb/all-hotels", {
+      const response = await fetch("https://rhms-backend.onrender.com/api/rdb/all-hotels", {
         headers: { "Authorization": `Bearer ${token}` }
       });
       

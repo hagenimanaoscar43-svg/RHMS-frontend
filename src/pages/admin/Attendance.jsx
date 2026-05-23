@@ -34,7 +34,7 @@ const Attendance = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(`http://localhost:5001/api/hotel/attendance?date=${selectedDate}`, {
+      const response = await fetch(`https://rhms-backend.onrender.com/api/hotel/attendance?date=${selectedDate}`, {
         headers: { "Authorization": `Bearer ${token}` }
       });
       
@@ -94,7 +94,7 @@ const Attendance = () => {
         hoursWorked = Math.round(diffHours * 10) / 10;
       }
 
-      const response = await fetch(`http://localhost:5001/api/hotel/attendance/${staffId}`, {
+      const response = await fetch(`https://rhms-backend.onrender.com/api/hotel/attendance/${staffId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

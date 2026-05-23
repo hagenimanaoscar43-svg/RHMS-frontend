@@ -47,7 +47,7 @@ const Rooms = () => {
   const fetchRooms = async () => {
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:5001/api/hotel/rooms", {
+      const response = await fetch("https://rhms-backend.onrender.com/api/hotel/rooms", {
         headers: { "Authorization": `Bearer ${token}` }
       });
       
@@ -76,7 +76,7 @@ const Rooms = () => {
       return;
     }
     try {
-      const response = await fetch("http://localhost:5001/api/hotel/rooms", {
+      const response = await fetch("https://rhms-backend.onrender.com/api/hotel/rooms", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -103,7 +103,7 @@ const Rooms = () => {
   const updateRoomStatus = async (roomId, status, maintenanceReason = "") => {
     setUpdating(true);
     try {
-      const response = await fetch(`http://localhost:5001/api/hotel/rooms/${roomId}/status`, {
+      const response = await fetch(`https://rhms-backend.onrender.com/api/hotel/rooms/${roomId}/status`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -140,7 +140,7 @@ const Rooms = () => {
     // Unblock directly without reason
     setUpdating(true);
     try {
-      const response = await fetch(`http://localhost:5001/api/hotel/rooms/${roomId}/block`, {
+      const response = await fetch(`https://rhms-backend.onrender.com/api/hotel/rooms/${roomId}/block`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -169,7 +169,7 @@ const Rooms = () => {
     
     setUpdating(true);
     try {
-      const response = await fetch(`http://localhost:5001/api/hotel/rooms/${selectedRoom.room_id}/block`, {
+      const response = await fetch(`https://rhms-backend.onrender.com/api/hotel/rooms/${selectedRoom.room_id}/block`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

@@ -1,5 +1,4 @@
-// src/services/api.js
-// TEMPORARILY HARDCODED FOR PRODUCTION
+
 const API_BASE_URL = 'https://rhms-backend.onrender.com/api';
 
 /* ================================

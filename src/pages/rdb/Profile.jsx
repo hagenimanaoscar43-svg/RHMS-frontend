@@ -20,7 +20,7 @@ const Profile = () => {
 
   const loadProfile = async () => {
     try {
-      const response = await fetch("http://localhost:5001/api/profile", {
+      const response = await fetch("https://rhms-backend.onrender.com/api/profile", {
         headers: { "Authorization": `Bearer ${token}` }
       });
       const data = await response.json();
@@ -41,7 +41,7 @@ const Profile = () => {
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5001/api/profile", {
+      const response = await fetch("https://rhms-backend.onrender.com/api/profile", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -62,7 +62,7 @@ const Profile = () => {
     e.preventDefault();
     if (passwordData.new !== passwordData.confirm) return alert('New passwords do not match');
     try {
-      const response = await fetch("http://localhost:5001/api/change-password", {
+      const response = await fetch("https://rhms-backend.onrender.com/api/change-password", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

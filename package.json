@@ -2,7 +2,7 @@
   "name": "rhms-frontend",
   "version": "1.0.0",
   "private": true,
-  "proxy": "http://localhost:5001",
+  "proxy": "https://rhms-backend.onrender.com",
   "dependencies": {
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.0",

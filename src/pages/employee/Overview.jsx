@@ -21,7 +21,7 @@ const Overview = () => {
 
   const fetchEmployeeData = async () => {
     try {
-      const response = await fetch("http://localhost:5001/api/employee/stats", {
+      const response = await fetch("https://rhms-backend.onrender.com/api/employee/stats", {
         headers: { "Authorization": `Bearer ${token}` }
       });
       

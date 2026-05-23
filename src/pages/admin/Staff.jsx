@@ -52,7 +52,7 @@ const Staff = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch("http://localhost:5001/api/hotel/staff", {
+      const response = await fetch("https://rhms-backend.onrender.com/api/hotel/staff", {
         headers: { "Authorization": `Bearer ${token}` }
       });
       
@@ -83,7 +83,7 @@ const Staff = () => {
     }
     
     try {
-      const response = await fetch("http://localhost:5001/api/hotel/staff", {
+      const response = await fetch("https://rhms-backend.onrender.com/api/hotel/staff", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -137,7 +137,7 @@ const Staff = () => {
     if (!editStaff) return;
     
     try {
-      const response = await fetch(`http://localhost:5001/api/hotel/staff/${editStaff.staff_id}`, {
+      const response = await fetch(`https://rhms-backend.onrender.com/api/hotel/staff/${editStaff.staff_id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -175,7 +175,7 @@ const Staff = () => {
   const deleteStaff = async (id, name) => {
     if (window.confirm(`Are you sure you want to delete ${name}?`)) {
       try {
-        const response = await fetch(`http://localhost:5001/api/hotel/staff/${id}`, {
+        const response = await fetch(`https://rhms-backend.onrender.com/api/hotel/staff/${id}`, {
           method: "DELETE",
           headers: { "Authorization": `Bearer ${token}` }
         });

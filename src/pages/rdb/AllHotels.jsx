@@ -28,7 +28,7 @@ const AllHotels = () => {
     setError(null);
     try {
       // Fix: Use the correct endpoint '/api/rdb/all-hotels' instead of '/api/rdb/hotels'
-      const response = await fetch("http://localhost:5001/api/rdb/all-hotels", {
+      const response = await fetch("https://rhms-backend.onrender.com/api/rdb/all-hotels", {
         method: 'GET',
         headers: { 
           "Authorization": `Bearer ${token}`,
@@ -60,7 +60,7 @@ const AllHotels = () => {
   const updateHotelStatus = async (hotelId, status) => {
     if (window.confirm(`Are you sure you want to ${status} this hotel?`)) {
       try {
-        const response = await fetch(`http://localhost:5001/api/rdb/hotels/${hotelId}/${status}`, {
+        const response = await fetch(`https://rhms-backend.onrender.com/api/rdb/hotels/${hotelId}/${status}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",

@@ -81,7 +81,7 @@ const Dashboard = () => {
 
   const loadDashboardData = async () => {
     try {
-      const response = await fetch("http://localhost:5001/api/rdb/stats", {
+      const response = await fetch("http:/https:/rhms-backend.onrender.com/api/rdb/stats", {
         headers: { "Authorization": `Bearer ${token}` }
       });
       const data = await response.json();
@@ -95,7 +95,7 @@ const Dashboard = () => {
 
   const loadPendingHotels = async () => {
     try {
-      const response = await fetch("http://localhost:5001/api/rdb/pending-hotels", {
+      const response = await fetch("http:/https:/rhms-backend.onrender.com/api/rdb/pending-hotels", {
         headers: { "Authorization": `Bearer ${token}` }
       });
       const data = await response.json();
@@ -122,7 +122,7 @@ const Dashboard = () => {
   const updateHotelStatus = async (hotelId, status) => {
     if (window.confirm(`Are you sure you want to ${status} this hotel?`)) {
       try {
-        const response = await fetch(`http://localhost:5001/api/rdb/hotels/${hotelId}/${status}`, {
+        const response = await fetch(`http:/https:/rhms-backend.onrender.com/api/rdb/hotels/${hotelId}/${status}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",

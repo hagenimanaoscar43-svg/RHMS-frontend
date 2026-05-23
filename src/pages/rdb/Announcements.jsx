@@ -28,7 +28,7 @@ const Announcements = () => {
   const loadAnnouncements = async () => {
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:5001/api/rdb/announcements", {
+      const response = await fetch("https://rhms-backend.onrender.com/api/rdb/announcements", {
         method: 'GET',
         headers: { 
           "Authorization": `Bearer ${token}`,
@@ -60,7 +60,7 @@ const Announcements = () => {
   // Updated loadStats function
   const loadStats = async () => {
     try {
-      const response = await fetch("http://localhost:5001/api/rdb/stats", {
+      const response = await fetch("https://rhms-backend.onrender.com/api/rdb/stats", {
         headers: { "Authorization": `Bearer ${token}` }
       });
       if (response.ok) {
@@ -85,7 +85,7 @@ const Announcements = () => {
     if (window.confirm(`Send "${title}" to ${stats.totalHotels} approved hotels?`)) {
       setSending(true);
       try {
-        const response = await fetch("http://localhost:5001/api/rdb/announcements", {
+        const response = await fetch("https://rhms-backend.onrender.com/api/rdb/announcements", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

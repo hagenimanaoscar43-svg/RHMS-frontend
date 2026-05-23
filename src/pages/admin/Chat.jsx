@@ -64,7 +64,7 @@ const Chat = () => {
 
   const loadConversations = async () => {
     try {
-      const response = await fetch("http://localhost:5001/api/admin/chat/conversations", {
+      const response = await fetch("https://rhms-backend.onrender.com/api/admin/chat/conversations", {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -85,7 +85,7 @@ const Chat = () => {
 
   const loadMessages = async (userId) => {
     try {
-      const response = await fetch(`http://localhost:5001/api/admin/chat/messages/${userId}`, {
+      const response = await fetch(`https://rhms-backend.onrender.com/api/admin/chat/messages/${userId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -107,7 +107,7 @@ const Chat = () => {
 
   const loadNotifications = async () => {
     try {
-      const response = await fetch("http://localhost:5001/api/notifications", {
+      const response = await fetch("https://rhms-backend.onrender.com/api/notifications", {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -137,7 +137,7 @@ const Chat = () => {
     setSending(true);
     
     try {
-      const response = await fetch("http://localhost:5001/api/admin/chat/send", {
+      const response = await fetch("https://rhms-backend.onrender.com/api/admin/chat/send", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -168,7 +168,7 @@ const Chat = () => {
 
   const sendAnnouncement = async (category, message) => {
     try {
-      const response = await fetch("http://localhost:5001/api/rdb/announcements", {
+      const response = await fetch("https://rhms-backend.onrender.com/api/rdb/announcements", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

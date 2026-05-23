@@ -48,7 +48,7 @@ const Salary = () => {
     setLoading(true);
     setError(null);
     try {
-      const staffResponse = await fetch("http://localhost:5001/api/hotel/staff", {
+      const staffResponse = await fetch("https://rhms-backend.onrender.com/api/hotel/staff", {
         headers: { "Authorization": `Bearer ${token}` }
       });
       
@@ -64,7 +64,7 @@ const Salary = () => {
         const staffWithHistory = await Promise.all(
           staffData.map(async (staffMember) => {
             try {
-              const historyResponse = await fetch(`http://localhost:5001/api/hotel/salary/${staffMember.staff_id}/history`, {
+              const historyResponse = await fetch(`https://rhms-backend.onrender.com/api/hotel/salary/${staffMember.staff_id}/history`, {
                 headers: { "Authorization": `Bearer ${token}` }
               });
               
@@ -97,7 +97,7 @@ const Salary = () => {
     try {
       const monthNum = months.indexOf(month) + 1;
       
-      const response = await fetch(`http://localhost:5001/api/hotel/salary/${staffId}/payment`, {
+      const response = await fetch(`https://rhms-backend.onrender.com/api/hotel/salary/${staffId}/payment`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -138,7 +138,7 @@ const Salary = () => {
     try {
       const monthNum = months.indexOf(month) + 1;
       
-      const response = await fetch(`http://localhost:5001/api/hotel/salary/${staffId}/bonus`, {
+      const response = await fetch(`https://rhms-backend.onrender.com/api/hotel/salary/${staffId}/bonus`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -178,7 +178,7 @@ const Salary = () => {
     try {
       const monthNum = months.indexOf(month) + 1;
       
-      const response = await fetch(`http://localhost:5001/api/hotel/salary/${staffId}/full`, {
+      const response = await fetch(`https://rhms-backend.onrender.com/api/hotel/salary/${staffId}/full`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

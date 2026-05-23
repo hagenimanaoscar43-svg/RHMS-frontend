@@ -80,7 +80,7 @@ const EmployeeOTP = () => {
     
     try {
       // Call resend OTP API for login
-      const response = await fetch('http://localhost:5001/api/employee/resend-otp', {
+      const response = await fetch('https://rhms-backend.onrender.com/api/employee/resend-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })
