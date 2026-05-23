@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5001/api";
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://rhms-backend.onrender.com/api';
 
 /* =========================
    CLIENT AUTH
@@ -6,7 +6,7 @@ const API_URL = "http://localhost:5001/api";
 
 // LOGIN
 export const clientLogin = async (email, password) => {
-  const res = await fetch(`${API_URL}/client/login`, {
+  const res = await fetch(`${API_BASE_URL}/client/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),
@@ -16,7 +16,7 @@ export const clientLogin = async (email, password) => {
 
 // REGISTER
 export const clientRegister = async (data) => {
-  const res = await fetch(`${API_URL}/client/register`, {
+  const res = await fetch(`${API_BASE_URL}/client/register`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
@@ -26,7 +26,7 @@ export const clientRegister = async (data) => {
 
 // VERIFY OTP
 export const clientVerify = async (data) => {
-  const res = await fetch(`${API_URL}/client/verify`, {
+  const res = await fetch(`${API_BASE_URL}/client/verify`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),

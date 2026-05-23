@@ -1,21 +1,19 @@
 // src/services/api.js
 
-const API_BASE_URL = 'http://localhost:5001/api';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://rhms-backend.onrender.com/api';
 
 /* ================================
    CORE API CALL (GLOBAL HANDLER)
 ================================ */
 const apiCall = async (endpoint, options = {}, authType = "client") => {
-  // Support multiple token types
   const clientToken = localStorage.getItem("clientToken");
   const adminToken = localStorage.getItem("adminToken");
   const employeeToken = localStorage.getItem("employeeToken");
 
   let token = null;
-
   if (authType === "admin") token = adminToken;
   else if (authType === "employee") token = employeeToken;
-  else token = clientToken; // default = client
+  else token = clientToken;
 
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
     ...options,
@@ -36,7 +34,7 @@ const apiCall = async (endpoint, options = {}, authType = "client") => {
 };
 
 /* ================================
-   AUTH HELPERS
+   AUTH HELPERS (ONLY ONCE)
 ================================ */
 export const authAPI = {
   loginClient: (data) =>
@@ -69,19 +67,16 @@ export const authAPI = {
       body: JSON.stringify(data),
     }),
 };
-
 /* ================================
    HOTELS API
 ================================ */
 export const hotelAPI = {
   getAll: () => apiCall("/client/hotels"),
-
   getById: (id) => apiCall(`/client/hotels/${id}`),
-
-  search: (query) =>
-    apiCall(`/client/hotels/search?q=${query}`),
+  search: (query) => apiCall(`/client/hotels/search?q=${query}`),
 };
 
+// ... KEEP ALL YOUR OTHER EXPORTS (bookingAPI, userAPI, etc.)
 /* ================================
    BOOKINGS API (CLIENT)
 ================================ */
