@@ -1,6 +1,6 @@
 // src/services/api.js
-
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://rhms-backend.onrender.com/api';
+// TEMPORARILY HARDCODED FOR PRODUCTION
+const API_BASE_URL = 'https://rhms-backend.onrender.com/api';
 
 /* ================================
    CORE API CALL (GLOBAL HANDLER)
@@ -34,7 +34,7 @@ const apiCall = async (endpoint, options = {}, authType = "client") => {
 };
 
 /* ================================
-   AUTH HELPERS (ONLY ONCE)
+   AUTH HELPERS
 ================================ */
 export const authAPI = {
   loginClient: (data) =>
@@ -67,6 +67,7 @@ export const authAPI = {
       body: JSON.stringify(data),
     }),
 };
+
 /* ================================
    HOTELS API
 ================================ */
@@ -76,30 +77,15 @@ export const hotelAPI = {
   search: (query) => apiCall(`/client/hotels/search?q=${query}`),
 };
 
-// ... KEEP ALL YOUR OTHER EXPORTS (bookingAPI, userAPI, etc.)
 /* ================================
    BOOKINGS API (CLIENT)
 ================================ */
 export const bookingAPI = {
   getAll: () => apiCall("/client/bookings"),
-
-  create: (data) =>
-    apiCall("/client/bookings", {
-      method: "POST",
-      body: JSON.stringify(data),
-    }),
-
+  create: (data) => apiCall("/client/bookings", { method: "POST", body: JSON.stringify(data) }),
   getById: (id) => apiCall(`/client/bookings/${id}`),
-
-  cancel: (id) =>
-    apiCall(`/client/bookings/${id}/cancel`, {
-      method: "PUT",
-    }),
-
-  delete: (id) =>
-    apiCall(`/client/bookings/${id}`, {
-      method: "DELETE",
-    }),
+  cancel: (id) => apiCall(`/client/bookings/${id}/cancel`, { method: "PUT" }),
+  delete: (id) => apiCall(`/client/bookings/${id}`, { method: "DELETE" }),
 };
 
 /* ================================
@@ -107,26 +93,8 @@ export const bookingAPI = {
 ================================ */
 export const userAPI = {
   getProfile: () => apiCall("/user/profile"),
-
-  updateProfile: (data) =>
-    apiCall("/user/profile", {
-      method: "PUT",
-      body: JSON.stringify({
-        full_name: data.fullName,
-        phone: data.phone,
-        address: data.address,
-        profile_picture: data.profilePicture,
-      }),
-    }),
-
-  changePassword: (data) =>
-    apiCall("/user/change-password", {
-      method: "POST",
-      body: JSON.stringify({
-        current_password: data.currentPassword,
-        new_password: data.newPassword,
-      }),
-    }),
+  updateProfile: (data) => apiCall("/user/profile", { method: "PUT", body: JSON.stringify(data) }),
+  changePassword: (data) => apiCall("/user/change-password", { method: "POST", body: JSON.stringify(data) }),
 };
 
 /* ================================
@@ -134,9 +102,7 @@ export const userAPI = {
 ================================ */
 export const attendanceAPI = {
   clockIn: () => apiCall("/employee/clock-in", { method: "POST" }, "employee"),
-
   clockOut: () => apiCall("/employee/clock-out", { method: "PUT" }, "employee"),
-
   getHistory: () => apiCall("/employee/attendance", {}, "employee"),
 };
 
@@ -145,62 +111,35 @@ export const attendanceAPI = {
 ================================ */
 export const adminAPI = {
   getStats: () => apiCall("/admin/stats", {}, "admin"),
-
   getUsers: () => apiCall("/admin/users", {}, "admin"),
-
   getBookings: () => apiCall("/admin/bookings", {}, "admin"),
 };
 
 /* ================================
-   CHAT (OPTIONAL)
+   OTHER APIS
 ================================ */
 export const chatAPI = {
   getMessages: () => apiCall("/chat/messages"),
-
-  sendMessage: (data) =>
-    apiCall("/chat/messages", {
-      method: "POST",
-      body: JSON.stringify(data),
-    }),
+  sendMessage: (data) => apiCall("/chat/messages", { method: "POST", body: JSON.stringify(data) }),
 };
 
-/* ================================
-   TASKS (OPTIONAL)
-================================ */
 export const taskAPI = {
   getAll: () => apiCall("/tasks"),
-
-  create: (data) =>
-    apiCall("/tasks", {
-      method: "POST",
-      body: JSON.stringify(data),
-    }),
+  create: (data) => apiCall("/tasks", { method: "POST", body: JSON.stringify(data) }),
 };
 
-/* ================================
-   NOTIFICATIONS
-================================ */
 export const notificationAPI = {
   getAll: () => apiCall("/notifications"),
 };
 
-/* ================================
-   REPORTS
-================================ */
 export const reportAPI = {
   getAll: () => apiCall("/reports"),
 };
 
-/* ================================
-   SALARY (EMPLOYEE)
-================================ */
 export const salaryAPI = {
   getCurrent: () => apiCall("/employee/salary", {}, "employee"),
 };
 
-/* ================================
-   EXPORT ALL
-================================ */
 export default {
   authAPI,
   hotelAPI,
