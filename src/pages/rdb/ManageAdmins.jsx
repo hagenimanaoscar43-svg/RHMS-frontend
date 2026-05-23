@@ -32,7 +32,7 @@ const ManageAdmins = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch("https://rhms-backend.onrender.com/api/rdb/admins", {
+      const response = await fetch("http://https://rhms-backend.onrender.com/api/rdb/admins", {
         method: 'GET',
         headers: { 
           "Authorization": `Bearer ${token}`,
@@ -71,8 +71,8 @@ const ManageAdmins = () => {
     
     try {
       const url = editingAdmin 
-        ? `https://rhms-backend.onrender.com/api/rdb/admins/${editingAdmin.admin_id}`
-        : "https://rhms-backend.onrender.com/api/rdb/admins";
+        ? `http://https://rhms-backend.onrender.com/api/rdb/admins/${editingAdmin.admin_id}`
+        : "http://https://rhms-backend.onrender.com/api/rdb/admins";
       
       const method = editingAdmin ? "PUT" : "POST";
       
@@ -111,7 +111,7 @@ const ManageAdmins = () => {
   const handleDelete = async (adminId, adminName) => {
     if (window.confirm(`Are you sure you want to delete ${adminName}?`)) {
       try {
-        const response = await fetch(`https://rhms-backend.onrender.com/api/rdb/admins/${adminId}`, {
+        const response = await fetch(`http://https://rhms-backend.onrender.com/api/rdb/admins/${adminId}`, {
           method: "DELETE",
           headers: { 
             "Authorization": `Bearer ${token}`,

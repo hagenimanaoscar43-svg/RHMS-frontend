@@ -22,7 +22,7 @@ const Notifications = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch("https://rhms-backend.onrender.com/api/notifications", {
+      const response = await fetch("http://https://rhms-backend.onrender.com/api/notifications", {
         headers: { "Authorization": `Bearer ${token}` }
       });
       
@@ -57,7 +57,7 @@ const Notifications = () => {
 
   const markAsRead = async (id) => {
     try {
-      await fetch(`https://rhms-backend.onrender.com/api/notifications/${id}/read`, {
+      await fetch(`http://https://rhms-backend.onrender.com/api/notifications/${id}/read`, {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
@@ -72,7 +72,7 @@ const Notifications = () => {
 
   const markAllAsRead = async () => {
     try {
-      await fetch("https://rhms-backend.onrender.com/api/notifications/read-all", {
+      await fetch("http://https://rhms-backend.onrender.com/api/notifications/read-all", {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
@@ -87,7 +87,7 @@ const Notifications = () => {
 
   const deleteNotification = async (id) => {
     try {
-      await fetch(`https://rhms-backend.onrender.com/api/notifications/${id}`, {
+      await fetch(`http://https://rhms-backend.onrender.com/api/notifications/${id}`, {
         method: "DELETE",
         headers: { "Authorization": `Bearer ${token}` }
       });

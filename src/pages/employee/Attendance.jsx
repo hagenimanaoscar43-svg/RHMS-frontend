@@ -83,7 +83,7 @@ const EmployeeAttendance = () => {
     
     const handleClockOut = async () => {
         try {
-            const response = await fetch('http://localhost:5001/api/employee/clock-out', {
+            const response = await fetch('https://rhms-backend.onrender.com/api/employee/clock-out', {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`,

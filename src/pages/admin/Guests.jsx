@@ -37,7 +37,7 @@ const Guests = () => {
     setLoading(true);
     try {
       // Fetch bookings to get guest information
-      const response = await fetch("https://rhms-backend.onrender.com/api/hotel/bookings", {
+      const response = await fetch("http://https://rhms-backend.onrender.com/api/hotel/bookings", {
         headers: { "Authorization": `Bearer ${token}` }
       });
       const data = await response.json();

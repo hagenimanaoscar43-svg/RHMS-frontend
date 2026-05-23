@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/static/css/main.61b1dd30.css",
-    "main.js": "/static/js/main.9e7c6455.js",
+    "main.js": "/static/js/main.caac7852.js",
     "static/media/convention.jpg": "/static/media/convention.4310a7b6739c965c3bf6.jpg",
     "index.html": "/index.html",
     "main.61b1dd30.css.map": "/static/css/main.61b1dd30.css.map",
-    "main.9e7c6455.js.map": "/static/js/main.9e7c6455.js.map"
+    "main.caac7852.js.map": "/static/js/main.caac7852.js.map"
   },
   "entrypoints": [
     "static/css/main.61b1dd30.css",
-    "static/js/main.9e7c6455.js"
+    "static/js/main.caac7852.js"
   ]
 }

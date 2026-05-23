@@ -113,7 +113,7 @@ export default function Bookings() {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch("https://rhms-backend.onrender.com/api/hotel/bookings", {
+      const response = await fetch("http://https://rhms-backend.onrender.com/api/hotel/bookings", {
         headers: { "Authorization": `Bearer ${token}` }
       });
       
@@ -144,7 +144,7 @@ export default function Bookings() {
     
     setUpdating(true);
     try {
-      const response = await fetch(`https://rhms-backend.onrender.com/api/hotel/bookings/${bookingId}/status`, {
+      const response = await fetch(`http://https://rhms-backend.onrender.com/api/hotel/bookings/${bookingId}/status`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

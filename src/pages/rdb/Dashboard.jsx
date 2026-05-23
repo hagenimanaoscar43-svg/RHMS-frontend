@@ -38,6 +38,9 @@ import {
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title, Filler);
 
+// API Base URL - SINGLE SOURCE OF TRUTH
+const API_BASE_URL = 'https://rhms-backend.onrender.com/api';
+
 const Dashboard = () => {
   const [currentUser, setCurrentUser] = useState({});
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -45,7 +48,8 @@ const Dashboard = () => {
     total_hotels: 0, total_clients: 0, total_bookings: 0,
     pending_hotels: 0, total_rooms: 0, total_staff: 0,
     approved_hotels: 0, rejected_hotels: 0, occupancy_rate: 0,
-    total_revenue: 0, available_rooms: 0, occupied_rooms: 0
+    total_revenue: 0, available_rooms: 0, occupied_rooms: 0,
+    maintenance_rooms: 0
   });
   const [pendingHotels, setPendingHotels] = useState([]);
   const [currentDate, setCurrentDate] = useState('');
@@ -54,7 +58,7 @@ const Dashboard = () => {
   const [notifications, setNotifications] = useState(3);
   const navigate = useNavigate();
   
-  const token = localStorage.getItem("token") || localStorage.getItem("rdbToken");
+  const token = localStorage.getItem("token") || localStorage.getItem("adminToken");
 
   useEffect(() => {
     if (!token) {
@@ -81,12 +85,14 @@ const Dashboard = () => {
 
   const loadDashboardData = async () => {
     try {
-      const response = await fetch("http:/https:/rhms-backend.onrender.com/api/rdb/stats", {
+      const response = await fetch(`${API_BASE_URL}/rdb/stats`, {
         headers: { "Authorization": `Bearer ${token}` }
       });
       const data = await response.json();
       if (response.ok) {
         setStats(prev => ({ ...prev, ...data }));
+      } else {
+        console.error('Failed to load stats:', data);
       }
     } catch (error) {
       console.error("Error loading stats:", error);
@@ -95,7 +101,7 @@ const Dashboard = () => {
 
   const loadPendingHotels = async () => {
     try {
-      const response = await fetch("http:/https:/rhms-backend.onrender.com/api/rdb/pending-hotels", {
+      const response = await fetch(`${API_BASE_URL}/rdb/pending-hotels`, {
         headers: { "Authorization": `Bearer ${token}` }
       });
       const data = await response.json();
@@ -109,20 +115,36 @@ const Dashboard = () => {
     }
   };
 
-  const loadRecentActivity = () => {
-    // Mock recent activity - replace with real data from API
-    setRecentActivity([
-      { id: 1, type: 'hotel', action: 'New hotel registration', name: 'Kigali Serena Hotel', time: '5 minutes ago', icon: '🏨' },
-      { id: 2, type: 'booking', action: 'New booking', name: 'John Doe booked 2 rooms', time: '1 hour ago', icon: '📅' },
-      { id: 3, type: 'review', action: 'Hotel approved', name: 'Marriott Hotel Kigali', time: '3 hours ago', icon: '✅' },
-      { id: 4, type: 'staff', action: 'Staff added', name: 'New employee at Hotel des Mille Collines', time: '5 hours ago', icon: '👥' },
-    ]);
+  const loadRecentActivity = async () => {
+    try {
+      // Try to fetch recent activity from API
+      const response = await fetch(`${API_BASE_URL}/rdb/recent-activity`, {
+        headers: { "Authorization": `Bearer ${token}` }
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setRecentActivity(data);
+      } else {
+        // Fallback to mock data
+        setRecentActivity([
+          { id: 1, type: 'hotel', action: 'New hotel registration', name: 'Kigali Serena Hotel', time: '5 minutes ago', icon: '🏨' },
+          { id: 2, type: 'booking', action: 'New booking', name: 'John Doe booked 2 rooms', time: '1 hour ago', icon: '📅' },
+          { id: 3, type: 'review', action: 'Hotel approved', name: 'Marriott Hotel Kigali', time: '3 hours ago', icon: '✅' },
+        ]);
+      }
+    } catch (error) {
+      console.error("Error loading activity:", error);
+      // Fallback mock data
+      setRecentActivity([
+        { id: 1, type: 'hotel', action: 'Welcome to RDB Dashboard', name: 'System Ready', time: 'Just now', icon: '🎉' },
+      ]);
+    }
   };
 
   const updateHotelStatus = async (hotelId, status) => {
     if (window.confirm(`Are you sure you want to ${status} this hotel?`)) {
       try {
-        const response = await fetch(`http:/https:/rhms-backend.onrender.com/api/rdb/hotels/${hotelId}/${status}`, {
+        const response = await fetch(`${API_BASE_URL}/rdb/hotels/${hotelId}/${status}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -133,17 +155,25 @@ const Dashboard = () => {
           alert(`Hotel ${status}d successfully!`);
           loadPendingHotels();
           loadDashboardData();
+        } else {
+          const error = await response.json();
+          alert(`Failed to ${status} hotel: ${error.error || 'Unknown error'}`);
         }
       } catch (error) {
-        alert("Failed to update hotel status");
+        console.error("Error updating hotel:", error);
+        alert("Failed to update hotel status. Check your connection.");
       }
     }
   };
 
   const handleLogout = () => {
     if (window.confirm('Are you sure you want to logout?')) {
-      localStorage.clear();
-      navigate('/');
+      localStorage.removeItem('token');
+      localStorage.removeItem('adminToken');
+      localStorage.removeItem('rdbToken');
+      localStorage.removeItem('user');
+      localStorage.removeItem('rdbUser');
+      navigate('/rdb/login');
     }
   };
 
@@ -282,7 +312,7 @@ const Dashboard = () => {
               <FiBell size={20} />
               {notifications > 0 && <span className="notification-dot">{notifications}</span>}
             </button>
-            <button className="icon-btn" onClick={loadDashboardData}>
+            <button className="icon-btn" onClick={() => { loadDashboardData(); loadPendingHotels(); }}>
               <FiRefreshCw size={20} />
             </button>
             <button className="btn-primary" onClick={() => navigate('/')}>
@@ -300,7 +330,7 @@ const Dashboard = () => {
           <StatCard title="Total Rooms" value={stats.total_rooms} icon={FiHome} color="#ef4444" />
           <StatCard title="Total Staff" value={stats.total_staff} icon={FiUserCheck} color="#06b6d4" />
           <StatCard title="Occupancy Rate" value={`${stats.occupancy_rate || 0}%`} icon={FiPercent} color="#ec4899" />
-          <StatCard title="Total Revenue" value={`${((stats.total_revenue || 0) / 1000000).toFixed(1)}M`} icon={FiDollarSign} color="#f97316" />
+          <StatCard title="Total Revenue" value={`RWF ${((stats.total_revenue || 0) / 1000000).toFixed(1)}M`} icon={FiDollarSign} color="#f97316" />
         </div>
 
         {/* Charts Row */}
@@ -353,10 +383,10 @@ const Dashboard = () => {
                   {pendingHotels.slice(0, 5).map(hotel => (
                     <tr key={hotel.hotel_id}>
                       <td><strong>{hotel.hotel_name}</strong></td>
-                      <td><span className="city-badge">{hotel.city}</span></td>
+                      <td><span className="city-badge">{hotel.city || 'N/A'}</span></td>
                       <td>{hotel.contact_person || 'N/A'}</td>
                       <td>{hotel.email}</td>
-                      <td>{hotel.phone}</td>
+                      <td>{hotel.phone || 'N/A'}</td>
                       <td>{new Date(hotel.created_at).toLocaleDateString()}</td>
                       <td>
                         <div className="action-btns">
@@ -432,6 +462,7 @@ const Dashboard = () => {
           position: fixed;
           height: 100vh;
           z-index: 100;
+          overflow-y: auto;
         }
 
         .sidebar.open { width: 280px; }
@@ -483,10 +514,11 @@ const Dashboard = () => {
           justify-content: center;
           font-size: 20px;
           font-weight: bold;
+          flex-shrink: 0;
         }
 
         .user-details h4 { font-size: 14px; margin-bottom: 4px; }
-        .user-details p { font-size: 12px; opacity: 0.7; }
+        .user-details p { font-size: 12px; opacity: 0.7; word-break: break-word; }
 
         .sidebar-nav { padding: 20px 12px; }
         .nav-item {
@@ -543,6 +575,8 @@ const Dashboard = () => {
           justify-content: space-between;
           align-items: center;
           box-shadow: var(--shadow);
+          flex-wrap: wrap;
+          gap: 16px;
         }
 
         .welcome-section h2 { font-size: 20px; color: var(--dark); margin-bottom: 4px; }
@@ -616,6 +650,7 @@ const Dashboard = () => {
           display: flex;
           align-items: center;
           justify-content: center;
+          flex-shrink: 0;
         }
 
         .stat-title { font-size: 12px; color: var(--gray); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
@@ -683,9 +718,14 @@ const Dashboard = () => {
         .btn-outline:hover { background: var(--primary); color: white; }
 
         /* Data Table */
+        .table-responsive {
+          overflow-x: auto;
+        }
+
         .data-table {
           width: 100%;
           border-collapse: collapse;
+          min-width: 600px;
         }
 
         .data-table th {
@@ -712,9 +752,10 @@ const Dashboard = () => {
           padding: 4px 12px;
           border-radius: 20px;
           font-size: 12px;
+          display: inline-block;
         }
 
-        .action-btns { display: flex; gap: 8px; }
+        .action-btns { display: flex; gap: 8px; flex-wrap: wrap; }
 
         .btn-approve, .btn-reject, .btn-view {
           padding: 6px 12px;
@@ -767,8 +808,14 @@ const Dashboard = () => {
           .main-content.sidebar-open { margin-left: 0; }
           .sidebar.open { transform: translateX(0); }
           .sidebar.closed { transform: translateX(-100%); }
+          .sidebar { position: fixed; z-index: 1000; }
           .stats-grid { grid-template-columns: repeat(2, 1fr); }
           .charts-row { grid-template-columns: 1fr; }
+          .main-content { padding: 16px; }
+        }
+
+        @media (max-width: 480px) {
+          .stats-grid { grid-template-columns: 1fr; }
         }
       `}</style>
     </div>

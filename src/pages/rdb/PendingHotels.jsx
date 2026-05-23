@@ -19,7 +19,7 @@ const PendingHotels = () => {
   const loadPendingHotels = async () => {
     setLoading(true);
     try {
-      const response = await fetch("https://rhms-backend.onrender.com/api/rdb/pending-hotels", {
+      const response = await fetch("http://https://rhms-backend.onrender.com/api/rdb/pending-hotels", {
         headers: { "Authorization": `Bearer ${token}` }
       });
       const data = await response.json();
@@ -36,7 +36,7 @@ const PendingHotels = () => {
   const handleApprove = async (hotelId) => {
     if (window.confirm('Approve this hotel?')) {
       try {
-        const response = await fetch(`https://rhms-backend.onrender.com/api/rdb/hotels/${hotelId}/approve`, {
+        const response = await fetch(`http://https://rhms-backend.onrender.com/api/rdb/hotels/${hotelId}/approve`, {
           method: "PUT",
           headers: { "Authorization": `Bearer ${token}` }
         });
@@ -54,7 +54,7 @@ const PendingHotels = () => {
     const reason = prompt('Enter rejection reason:');
     if (reason) {
       try {
-        const response = await fetch(`https://rhms-backend.onrender.com/api/rdb/hotels/${hotelId}/reject`, {
+        const response = await fetch(`http://https://rhms-backend.onrender.com/api/rdb/hotels/${hotelId}/reject`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",

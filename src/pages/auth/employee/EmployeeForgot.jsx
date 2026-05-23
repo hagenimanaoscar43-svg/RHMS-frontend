@@ -38,7 +38,7 @@ const EmployeeForgot = () => {
       const data = await res.json();
 
       if (res.ok) {
-        setSuccess("Password reset link sent to your email! Redirecting...");
+        setSuccess("Password reset link sent to your email!");
         localStorage.setItem("resetEmployeeEmail", email);
         setTimeout(() => {
           // Redirect to login page, user will click link from email
