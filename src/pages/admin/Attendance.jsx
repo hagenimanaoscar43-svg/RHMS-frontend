@@ -2,6 +2,9 @@
 import React, { useState, useEffect } from "react";
 import { FiEdit2, FiSave, FiX, FiCheckCircle, FiClock, FiAlertCircle } from "react-icons/fi";
 
+// ✅ CORRECTED: Single source of truth for API URL
+const API_BASE_URL = 'https://rhms-backend.onrender.com/api';
+
 const Attendance = () => {
   const [staffAttendance, setStaffAttendance] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -34,7 +37,8 @@ const Attendance = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(`http://https://rhms-backend.onrender.com/api/hotel/attendance?date=${selectedDate}`, {
+      // ✅ FIXED: Removed double http://
+      const response = await fetch(`${API_BASE_URL}/hotel/attendance?date=${selectedDate}`, {
         headers: { "Authorization": `Bearer ${token}` }
       });
       
@@ -94,7 +98,8 @@ const Attendance = () => {
         hoursWorked = Math.round(diffHours * 10) / 10;
       }
 
-      const response = await fetch(`http://https://rhms-backend.onrender.com/api/hotel/attendance/${staffId}`, {
+      // ✅ FIXED: Removed double http://
+      const response = await fetch(`${API_BASE_URL}/hotel/attendance/${staffId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -206,7 +211,7 @@ const Attendance = () => {
         <h3>Staff Attendance - {new Date(selectedDate).toLocaleDateString()}</h3>
         <div style={{ overflowX: 'auto' }}>
           <table style={styles.table}>
-            <thead>
+            <thead><td>
               <tr style={styles.tableHeader}>
                 <th>Staff Name</th>
                 <th>Department</th>
@@ -216,8 +221,8 @@ const Attendance = () => {
                 <th>Check Out</th>
                 <th>Hours</th>
                 <th>Status</th>
-                <th>Actions</th>
-              </tr>
+                <th>Actions</th></tr>
+              </td>
             </thead>
             <tbody>
               {staffAttendance.length === 0 ? (

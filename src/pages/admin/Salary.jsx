@@ -1,10 +1,13 @@
-// frontend/src/pages/admin/Salary.jsx
+// frontend/src/pages/admin/Salary.jsx - Complete working version with correct API URL
 import React, { useState, useEffect } from "react";
 import { 
   FiDollarSign, FiPercent, FiUsers, FiCheckCircle, 
   FiClock, FiAlertCircle, FiEdit2, FiEye, FiCalendar,
   FiPlus, FiMinus, FiSave, FiX, FiRefreshCw
 } from "react-icons/fi";
+
+// ✅ CORRECTED: Single source of truth for API URL
+const API_BASE_URL = 'https://rhms-backend.onrender.com/api';
 
 const Salary = () => {
   const [staff, setStaff] = useState([]);
@@ -48,7 +51,8 @@ const Salary = () => {
     setLoading(true);
     setError(null);
     try {
-      const staffResponse = await fetch("http://https://rhms-backend.onrender.com/api/hotel/staff", {
+      // ✅ FIXED: Removed double http://
+      const staffResponse = await fetch(`${API_BASE_URL}/hotel/staff`, {
         headers: { "Authorization": `Bearer ${token}` }
       });
       
@@ -64,7 +68,8 @@ const Salary = () => {
         const staffWithHistory = await Promise.all(
           staffData.map(async (staffMember) => {
             try {
-              const historyResponse = await fetch(`http://https://rhms-backend.onrender.com/api/hotel/salary/${staffMember.staff_id}/history`, {
+              // ✅ FIXED: Removed double http://
+              const historyResponse = await fetch(`${API_BASE_URL}/hotel/salary/${staffMember.staff_id}/history`, {
                 headers: { "Authorization": `Bearer ${token}` }
               });
               
@@ -97,7 +102,8 @@ const Salary = () => {
     try {
       const monthNum = months.indexOf(month) + 1;
       
-      const response = await fetch(`http://https://rhms-backend.onrender.com/api/hotel/salary/${staffId}/payment`, {
+      // ✅ FIXED: Removed double http://
+      const response = await fetch(`${API_BASE_URL}/hotel/salary/${staffId}/payment`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -138,7 +144,8 @@ const Salary = () => {
     try {
       const monthNum = months.indexOf(month) + 1;
       
-      const response = await fetch(`http://https://rhms-backend.onrender.com/api/hotel/salary/${staffId}/bonus`, {
+      // ✅ FIXED: Removed double http://
+      const response = await fetch(`${API_BASE_URL}/hotel/salary/${staffId}/bonus`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -178,7 +185,8 @@ const Salary = () => {
     try {
       const monthNum = months.indexOf(month) + 1;
       
-      const response = await fetch(`http://https://rhms-backend.onrender.com/api/hotel/salary/${staffId}/full`, {
+      // ✅ FIXED: Removed double http://
+      const response = await fetch(`${API_BASE_URL}/hotel/salary/${staffId}/full`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -225,7 +233,7 @@ const Salary = () => {
       overtime: record?.overtime || 0,
       commission: record?.commission || 0,
       allowances: record?.allowances || 0,
-      deductions: record?.deductions || 0
+      deductions: record?.deductions_tax + record?.deductions_insurance + record?.deductions_other || 0
     });
     setSelectedStaff(emp);
     setShowFullSalaryModal(true);
@@ -298,6 +306,20 @@ const Salary = () => {
       <div style={styles.loadingContainer}>
         <div className="spinner"></div>
         <p>Loading salary data...</p>
+        <style>{`
+          .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #f3f4f6;
+            border-top-color: #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+          }
+          @keyframes spin {
+            to { transform: rotate(360deg); }
+          }
+        `}</style>
       </div>
     );
   }
@@ -410,7 +432,7 @@ const Salary = () => {
                         <div style={styles.avatar}>{emp.full_name?.charAt(0)}</div>
                         <strong>{emp.full_name}</strong>
                       </div>
-                    </td>
+                     </td>
                     <td style={styles.td}>{emp.role}</td>
                     <td style={styles.td}>{emp.department}</td>
                     <td style={styles.td}><strong>{formatNumber(salary.perDay)}</strong></td>
@@ -429,7 +451,7 @@ const Salary = () => {
                           <FiEdit2 size={12} /> Edit
                         </button>
                       </div>
-                    </td>
+                     </td>
                     <td style={styles.td}><strong style={styles.totalAmount}>{formatNumber(salary.net)}</strong></td>
                     <td style={styles.td}>
                       <span className={`status-badge ${salary.status === "Paid" ? "status-paid" : salary.status === "Processing" ? "status-processing" : "status-pending"}`}>
@@ -438,7 +460,7 @@ const Salary = () => {
                         {salary.status === "Pending" && <FiAlertCircle size={12} />}
                         {salary.status}
                       </span>
-                    </td>
+                     </td>
                     <td style={styles.td}>
                       <div style={styles.actionButtons}>
                         <button 
@@ -464,8 +486,8 @@ const Salary = () => {
                           <FiEye size={12} /> History
                         </button>
                       </div>
-                    </td>
-                  </tr>
+                     </td>
+                   </tr>
                 );
               })
             )}
@@ -635,7 +657,7 @@ const Salary = () => {
                     <thead>
                       <tr>
                         <th>Month</th><th>Year</th><th>Base Salary</th><th>Bonus</th><th>Overtime</th><th>Commission</th><th>Allowances</th><th>Deductions</th><th>Net Pay</th><th>Status</th>
-                      </tr>
+                       </tr>
                     </thead>
                     <tbody>
                       {(historyEmployee.history || []).map((record, idx) => {
@@ -673,18 +695,6 @@ const Salary = () => {
       )}
 
       <style>{`
-        .spinner {
-          width: 40px;
-          height: 40px;
-          border: 3px solid #f3f4f6;
-          border-top-color: #667eea;
-          border-radius: 50%;
-          animation: spin 1s linear infinite;
-          margin: 0 auto 16px;
-        }
-        @keyframes spin {
-          to { transform: rotate(360deg); }
-        }
         .status-badge {
           padding: 4px 12px;
           border-radius: 20px;

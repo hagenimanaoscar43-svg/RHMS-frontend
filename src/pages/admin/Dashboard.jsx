@@ -8,6 +8,9 @@ import {
   FiCheckSquare
 } from "react-icons/fi";
 
+// ✅ CORRECTED: Single source of truth for API URL
+const API_BASE_URL = 'https://rhms-backend.onrender.com/api';
+
 const Dashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -40,7 +43,8 @@ const Dashboard = () => {
       if (!token) return;
       
       try {
-        const response = await fetch("http://https://rhms-backend.onrender.com/api/hotel/bookings/counts", {
+        // ✅ FIXED: Removed double http://
+        const response = await fetch(`${API_BASE_URL}/hotel/bookings/counts`, {
           headers: { "Authorization": `Bearer ${token}` }
         });
         

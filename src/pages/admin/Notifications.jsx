@@ -1,6 +1,9 @@
 // frontend/src/pages/admin/Notifications.jsx
 import React, { useState, useEffect } from "react";
 
+// ✅ CORRECTED: Single source of truth for API URL
+const API_BASE_URL = 'https://rhms-backend.onrender.com/api';
+
 const Notifications = () => {
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -22,7 +25,8 @@ const Notifications = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch("http://https://rhms-backend.onrender.com/api/notifications", {
+      // ✅ FIXED: Removed double http://
+      const response = await fetch(`${API_BASE_URL}/notifications`, {
         headers: { "Authorization": `Bearer ${token}` }
       });
       
@@ -57,7 +61,8 @@ const Notifications = () => {
 
   const markAsRead = async (id) => {
     try {
-      await fetch(`http://https://rhms-backend.onrender.com/api/notifications/${id}/read`, {
+      // ✅ FIXED: Removed double http://
+      await fetch(`${API_BASE_URL}/notifications/${id}/read`, {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
@@ -72,7 +77,8 @@ const Notifications = () => {
 
   const markAllAsRead = async () => {
     try {
-      await fetch("http://https://rhms-backend.onrender.com/api/notifications/read-all", {
+      // ✅ FIXED: Removed double http://
+      await fetch(`${API_BASE_URL}/notifications/read-all`, {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
@@ -87,7 +93,8 @@ const Notifications = () => {
 
   const deleteNotification = async (id) => {
     try {
-      await fetch(`http://https://rhms-backend.onrender.com/api/notifications/${id}`, {
+      // ✅ FIXED: Removed double http://
+      await fetch(`${API_BASE_URL}/notifications/${id}`, {
         method: "DELETE",
         headers: { "Authorization": `Bearer ${token}` }
       });

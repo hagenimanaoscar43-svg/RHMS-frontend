@@ -6,6 +6,9 @@ import {
   FiHome, FiStar, FiMoreVertical, FiSmile, FiPaperclip
 } from "react-icons/fi";
 
+// ✅ CORRECTED: Single source of truth for API URL
+const API_BASE_URL = 'https://rhms-backend.onrender.com/api';
+
 // Chat Categories for announcements
 const CATEGORIES = [
   { key: "urgent", label: "Urgent", color: "#dc2626", bg: "#fee2e2" },
@@ -64,7 +67,8 @@ const Chat = () => {
 
   const loadConversations = async () => {
     try {
-      const response = await fetch("http://https://rhms-backend.onrender.com/api/admin/chat/conversations", {
+      // ✅ FIXED: Removed double http://
+      const response = await fetch(`${API_BASE_URL}/admin/chat/conversations`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -85,7 +89,8 @@ const Chat = () => {
 
   const loadMessages = async (userId) => {
     try {
-      const response = await fetch(`http://https://rhms-backend.onrender.com/api/admin/chat/messages/${userId}`, {
+      // ✅ FIXED: Removed double http://
+      const response = await fetch(`${API_BASE_URL}/admin/chat/messages/${userId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -107,7 +112,8 @@ const Chat = () => {
 
   const loadNotifications = async () => {
     try {
-      const response = await fetch("http://https://rhms-backend.onrender.com/api/notifications", {
+      // ✅ FIXED: Removed double http://
+      const response = await fetch(`${API_BASE_URL}/notifications`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -137,7 +143,8 @@ const Chat = () => {
     setSending(true);
     
     try {
-      const response = await fetch("http://https://rhms-backend.onrender.com/api/admin/chat/send", {
+      // ✅ FIXED: Removed double http://
+      const response = await fetch(`${API_BASE_URL}/admin/chat/send`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -168,7 +175,8 @@ const Chat = () => {
 
   const sendAnnouncement = async (category, message) => {
     try {
-      const response = await fetch("http://https://rhms-backend.onrender.com/api/rdb/announcements", {
+      // ✅ FIXED: Removed double http://
+      const response = await fetch(`${API_BASE_URL}/rdb/announcements`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

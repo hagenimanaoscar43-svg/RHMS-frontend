@@ -1,4 +1,4 @@
-// frontend/src/pages/admin/Staff.jsx - Complete working version
+// frontend/src/pages/admin/Staff.jsx - Complete working version with correct API URL
 import React, { useState, useEffect } from "react";
 import { 
   FiPlus, FiSearch, FiEye, FiEdit2, FiTrash2, FiMail, 
@@ -6,6 +6,9 @@ import {
   FiFilter, FiDollarSign, FiPercent,
   FiCheckCircle, FiXCircle, FiUserPlus, FiClock
 } from "react-icons/fi";
+
+// ✅ CORRECTED: Single source of truth for API URL
+const API_BASE_URL = 'https://rhms-backend.onrender.com/api';
 
 const Staff = () => {
   const [staff, setStaff] = useState([]);
@@ -52,7 +55,8 @@ const Staff = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch("http://https://rhms-backend.onrender.com/api/hotel/staff", {
+      // ✅ FIXED: Removed double http://
+      const response = await fetch(`${API_BASE_URL}/hotel/staff`, {
         headers: { "Authorization": `Bearer ${token}` }
       });
       
@@ -83,7 +87,8 @@ const Staff = () => {
     }
     
     try {
-      const response = await fetch("http://https://rhms-backend.onrender.com/api/hotel/staff", {
+      // ✅ FIXED: Removed double http://
+      const response = await fetch(`${API_BASE_URL}/hotel/staff`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -137,7 +142,8 @@ const Staff = () => {
     if (!editStaff) return;
     
     try {
-      const response = await fetch(`http://https://rhms-backend.onrender.com/api/hotel/staff/${editStaff.staff_id}`, {
+      // ✅ FIXED: Removed double http://
+      const response = await fetch(`${API_BASE_URL}/hotel/staff/${editStaff.staff_id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -175,7 +181,8 @@ const Staff = () => {
   const deleteStaff = async (id, name) => {
     if (window.confirm(`Are you sure you want to delete ${name}?`)) {
       try {
-        const response = await fetch(`http://https://rhms-backend.onrender.com/api/hotel/staff/${id}`, {
+        // ✅ FIXED: Removed double http://
+        const response = await fetch(`${API_BASE_URL}/hotel/staff/${id}`, {
           method: "DELETE",
           headers: { "Authorization": `Bearer ${token}` }
         });

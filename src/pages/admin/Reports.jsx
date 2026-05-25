@@ -1,6 +1,9 @@
 // frontend/src/pages/admin/Reports.jsx
 import React, { useState, useEffect } from "react";
 
+// ✅ CORRECTED: Single source of truth for API URL
+const API_BASE_URL = 'https://rhms-backend.onrender.com/api';
+
 const Reports = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -25,8 +28,8 @@ const Reports = () => {
     setLoading(true);
     setError(null);
     try {
-      // Fetch hotel stats
-      const statsResponse = await fetch("http://https://rhms-backend.onrender.com/api/hotel/stats", {
+      // ✅ FIXED: Removed double http://
+      const statsResponse = await fetch(`${API_BASE_URL}/hotel/stats`, {
         headers: { "Authorization": `Bearer ${token}` }
       });
       
@@ -38,8 +41,8 @@ const Reports = () => {
       
       const statsData = await statsResponse.json();
       
-      // Fetch bookings for revenue calculation
-      const bookingsResponse = await fetch("http://https://rhms-backend.onrender.com/api/hotel/bookings", {
+      // ✅ FIXED: Removed double http://
+      const bookingsResponse = await fetch(`${API_BASE_URL}/hotel/bookings`, {
         headers: { "Authorization": `Bearer ${token}` }
       });
       
@@ -53,8 +56,8 @@ const Reports = () => {
       const totalRevenue = confirmedBookings.reduce((sum, b) => sum + (b.final_amount || 0), 0);
       const totalGuests = confirmedBookings.length;
       
-      // Calculate occupancy from rooms
-      const roomsResponse = await fetch("http://https://rhms-backend.onrender.com/api/hotel/rooms", {
+      // ✅ FIXED: Removed double http://
+      const roomsResponse = await fetch(`${API_BASE_URL}/hotel/rooms`, {
         headers: { "Authorization": `Bearer ${token}` }
       });
       

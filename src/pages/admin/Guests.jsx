@@ -7,6 +7,9 @@ import {
   FiClock, FiDownload, FiFilter, FiArrowUp, FiArrowDown
 } from "react-icons/fi";
 
+// ✅ CORRECTED: Single source of truth for API URL
+const API_BASE_URL = 'https://rhms-backend.onrender.com/api';
+
 const Guests = () => {
   const [guests, setGuests] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -22,7 +25,7 @@ const Guests = () => {
     guest_name: "", email: "", phone: "", id_number: "", nationality: "Rwandan", status: "upcoming", room_number: "", notes: ""
   });
 
-  const token = localStorage.getItem("hotelToken");
+  const token = localStorage.getItem("hotelToken") || localStorage.getItem("token");
 
   useEffect(() => {
     if (token) {
@@ -36,8 +39,8 @@ const Guests = () => {
   const fetchGuests = async () => {
     setLoading(true);
     try {
-      // Fetch bookings to get guest information
-      const response = await fetch("http://https://rhms-backend.onrender.com/api/hotel/bookings", {
+      // ✅ FIXED: Removed double http://
+      const response = await fetch(`${API_BASE_URL}/hotel/bookings`, {
         headers: { "Authorization": `Bearer ${token}` }
       });
       const data = await response.json();
@@ -73,6 +76,7 @@ const Guests = () => {
         setError(data.error || "Failed to fetch guests");
       }
     } catch (error) {
+      console.error("Error fetching guests:", error);
       setError("Network error. Please try again.");
     } finally {
       setLoading(false);
@@ -149,7 +153,35 @@ const Guests = () => {
   const checkedOut = guests.filter(g => g.status === "Checked out").length;
 
   if (loading) {
-    return <div style={{ textAlign: "center", padding: "50px" }}>Loading guests...</div>;
+    return (
+      <div style={{ textAlign: "center", padding: "50px" }}>
+        <div className="spinner"></div>
+        <p>Loading guests...</p>
+        <style>{`
+          .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #f3f4f6;
+            border-top-color: #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+          }
+          @keyframes spin {
+            to { transform: rotate(360deg); }
+          }
+        `}</style>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div style={{ textAlign: "center", padding: "50px", color: "#dc2626" }}>
+        <p>❌ {error}</p>
+        <button onClick={fetchGuests} style={styles.retryBtn}>Retry</button>
+      </div>
+    );
   }
 
   return (
@@ -214,6 +246,77 @@ const Guests = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Add Modal (Simplified) */}
+      {showAddModal && (
+        <div style={styles.modalOverlay} onClick={() => setShowAddModal(false)}>
+          <div style={styles.modal} onClick={(e) => e.stopPropagation()}>
+            <div style={styles.modalHeader}>
+              <h3>Add New Guest</h3>
+              <button onClick={() => setShowAddModal(false)} style={styles.closeBtn}>&times;</button>
+            </div>
+            <div style={styles.modalBody}>
+              <p style={{ textAlign: "center", color: "#6b7280", padding: "20px" }}>
+                Guests are automatically created when they make a booking.
+                <br/><br/>
+                To add a guest, please go to <strong>Bookings</strong> and create a new booking.
+              </p>
+            </div>
+            <div style={styles.modalFooter}>
+              <button onClick={() => setShowAddModal(false)} style={styles.cancelBtn}>Close</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* View Modal */}
+      {showViewModal && selectedGuest && (
+        <div style={styles.modalOverlay} onClick={() => setShowViewModal(false)}>
+          <div style={styles.modal} onClick={(e) => e.stopPropagation()}>
+            <div style={styles.modalHeader}>
+              <h3>Guest Details - {selectedGuest.guest_name}</h3>
+              <button onClick={() => setShowViewModal(false)} style={styles.closeBtn}>&times;</button>
+            </div>
+            <div style={styles.modalBody}>
+              <div style={styles.infoRow}><label>Full Name:</label><span>{selectedGuest.guest_name}</span></div>
+              <div style={styles.infoRow}><label>Email:</label><span>{selectedGuest.email}</span></div>
+              <div style={styles.infoRow}><label>Phone:</label><span>{selectedGuest.phone}</span></div>
+              <div style={styles.infoRow}><label>ID/Passport:</label><span>{selectedGuest.id_number}</span></div>
+              <div style={styles.infoRow}><label>Nationality:</label><span>{selectedGuest.nationality}</span></div>
+              <div style={styles.infoRow}><label>Room Number:</label><span>{selectedGuest.room_number}</span></div>
+              <div style={styles.infoRow}><label>Status:</label><span><Badge status={selectedGuest.status} /></span></div>
+              <div style={styles.infoRow}><label>Visits:</label><span>{selectedGuest.visits}</span></div>
+              <div style={styles.infoRow}><label>Since:</label><span>{selectedGuest.since}</span></div>
+              {selectedGuest.notes && <div style={styles.infoRow}><label>Notes:</label><span>{selectedGuest.notes}</span></div>}
+            </div>
+            <div style={styles.modalFooter}>
+              <button onClick={() => setShowViewModal(false)} style={styles.cancelBtn}>Close</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Edit Modal */}
+      {showEditModal && selectedGuest && (
+        <div style={styles.modalOverlay} onClick={() => setShowEditModal(false)}>
+          <div style={styles.modal} onClick={(e) => e.stopPropagation()}>
+            <div style={styles.modalHeader}>
+              <h3>Edit Guest - {selectedGuest.guest_name}</h3>
+              <button onClick={() => setShowEditModal(false)} style={styles.closeBtn}>&times;</button>
+            </div>
+            <div style={styles.modalBody}>
+              <p style={{ textAlign: "center", color: "#6b7280", padding: "20px" }}>
+                Guest information is managed through their booking.
+                <br/><br/>
+                Please go to <strong>Bookings</strong> to update guest details.
+              </p>
+            </div>
+            <div style={styles.modalFooter}>
+              <button onClick={() => setShowEditModal(false)} style={styles.cancelBtn}>Close</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
@@ -230,7 +333,16 @@ const styles = {
   th: { textAlign: "left", padding: "14px 16px", fontSize: 12, color: "#6b7280", fontWeight: 600, borderBottom: "1px solid #e5e7eb", background: "#f9fafb" },
   td: { padding: "14px 16px", borderBottom: "1px solid #f3f4f6", color: "#111827", fontSize: 13, verticalAlign: "middle" },
   statGrid: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 16, marginBottom: 24 },
-  statCard: { background: "white", border: "1px solid #e5e7eb", borderRadius: 12, padding: 20, display: "flex", justifyContent: "space-between", alignItems: "center" }
+  statCard: { background: "white", border: "1px solid #e5e7eb", borderRadius: 12, padding: 20, display: "flex", justifyContent: "space-between", alignItems: "center" },
+  modalOverlay: { position: "fixed", top: 0, left: 0, right: 0, bottom: 0, background: "rgba(0,0,0,0.5)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000 },
+  modal: { background: "white", borderRadius: 16, width: "90%", maxWidth: "500px", maxHeight: "90vh", overflow: "auto" },
+  modalHeader: { padding: "20px", borderBottom: "1px solid #e5e7eb", display: "flex", justifyContent: "space-between", alignItems: "center" },
+  modalBody: { padding: "20px" },
+  modalFooter: { padding: "20px", borderTop: "1px solid #e5e7eb", display: "flex", justifyContent: "flex-end", gap: 12 },
+  infoRow: { display: "flex", padding: "8px 0", borderBottom: "1px solid #f3f4f6" },
+  closeBtn: { background: "none", border: "none", fontSize: 24, cursor: "pointer", color: "#6b7280" },
+  cancelBtn: { padding: "8px 16px", background: "#f3f4f6", border: "none", borderRadius: 6, cursor: "pointer" },
+  retryBtn: { marginTop: 16, padding: "8px 20px", background: "#667eea", color: "white", border: "none", borderRadius: 6, cursor: "pointer" }
 };
 
 const Badge = ({ status }) => {

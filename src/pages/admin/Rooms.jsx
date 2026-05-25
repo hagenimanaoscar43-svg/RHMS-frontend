@@ -8,6 +8,9 @@ import {
   FiCoffee, FiSun, FiMinus, FiLock, FiUnlock, FiPlus as FiPlusIcon
 } from "react-icons/fi";
 
+// ✅ CORRECTED: Single source of truth for API URL
+const API_BASE_URL = 'https://rhms-backend.onrender.com/api';
+
 const Rooms = () => {
   const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -47,7 +50,8 @@ const Rooms = () => {
   const fetchRooms = async () => {
     setLoading(true);
     try {
-      const response = await fetch("http://https://rhms-backend.onrender.com/api/hotel/rooms", {
+      // ✅ FIXED: Removed double http://
+      const response = await fetch(`${API_BASE_URL}/hotel/rooms`, {
         headers: { "Authorization": `Bearer ${token}` }
       });
       
@@ -64,6 +68,7 @@ const Rooms = () => {
         setError(data.error || "Failed to fetch rooms");
       }
     } catch (error) {
+      console.error("Error fetching rooms:", error);
       setError("Network error. Please try again.");
     } finally {
       setLoading(false);
@@ -76,7 +81,8 @@ const Rooms = () => {
       return;
     }
     try {
-      const response = await fetch("http://https://rhms-backend.onrender.com/api/hotel/rooms", {
+      // ✅ FIXED: Removed double http://
+      const response = await fetch(`${API_BASE_URL}/hotel/rooms`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -85,6 +91,7 @@ const Rooms = () => {
         body: JSON.stringify(newRoom)
       });
       if (response.ok) {
+        alert("✅ Room added successfully!");
         setShowAddModal(false);
         fetchRooms();
         setNewRoom({ 
@@ -96,6 +103,7 @@ const Rooms = () => {
         alert(error.error || "Failed to add room");
       }
     } catch (error) {
+      console.error("Error adding room:", error);
       alert("Failed to add room");
     }
   };
@@ -103,7 +111,8 @@ const Rooms = () => {
   const updateRoomStatus = async (roomId, status, maintenanceReason = "") => {
     setUpdating(true);
     try {
-      const response = await fetch(`http://https://rhms-backend.onrender.com/api/hotel/rooms/${roomId}/status`, {
+      // ✅ FIXED: Removed double http://
+      const response = await fetch(`${API_BASE_URL}/hotel/rooms/${roomId}/status`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -121,6 +130,7 @@ const Rooms = () => {
         alert(error.error || "Failed to update room status");
       }
     } catch (error) {
+      console.error("Error updating room status:", error);
       alert("Failed to update room status");
     } finally {
       setUpdating(false);
@@ -140,7 +150,8 @@ const Rooms = () => {
     // Unblock directly without reason
     setUpdating(true);
     try {
-      const response = await fetch(`http://https://rhms-backend.onrender.com/api/hotel/rooms/${roomId}/block`, {
+      // ✅ FIXED: Removed double http://
+      const response = await fetch(`${API_BASE_URL}/hotel/rooms/${roomId}/block`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -169,7 +180,8 @@ const Rooms = () => {
     
     setUpdating(true);
     try {
-      const response = await fetch(`http://https://rhms-backend.onrender.com/api/hotel/rooms/${selectedRoom.room_id}/block`, {
+      // ✅ FIXED: Removed double http://
+      const response = await fetch(`${API_BASE_URL}/hotel/rooms/${selectedRoom.room_id}/block`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -198,8 +210,23 @@ const Rooms = () => {
 
   const deleteRoom = async (roomId) => {
     if (window.confirm('Are you sure you want to delete this room?')) {
-      // Add delete endpoint if available
-      fetchRooms();
+      try {
+        // ✅ FIXED: Removed double http://
+        const response = await fetch(`${API_BASE_URL}/hotel/rooms/${roomId}`, {
+          method: "DELETE",
+          headers: { "Authorization": `Bearer ${token}` }
+        });
+        if (response.ok) {
+          alert("✅ Room deleted successfully!");
+          fetchRooms();
+        } else {
+          const error = await response.json();
+          alert(error.error || "Failed to delete room");
+        }
+      } catch (error) {
+        console.error("Error deleting room:", error);
+        alert("Failed to delete room");
+      }
     }
   };
 
@@ -209,10 +236,40 @@ const Rooms = () => {
   };
 
   const updateRoom = async () => {
-    // Add update endpoint if available
-    setShowEditModal(false);
-    setEditingRoom(null);
-    fetchRooms();
+    if (!editingRoom) return;
+    
+    try {
+      // ✅ FIXED: Removed double http://
+      const response = await fetch(`${API_BASE_URL}/hotel/rooms/${editingRoom.room_id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          room_number: editingRoom.room_number,
+          room_type: editingRoom.room_type,
+          floor: editingRoom.floor,
+          capacity: editingRoom.capacity,
+          price_per_night: editingRoom.price_per_night,
+          amenities: editingRoom.amenities,
+          description: editingRoom.description
+        })
+      });
+      
+      if (response.ok) {
+        alert("✅ Room updated successfully!");
+        setShowEditModal(false);
+        setEditingRoom(null);
+        fetchRooms();
+      } else {
+        const error = await response.json();
+        alert(error.error || "Failed to update room");
+      }
+    } catch (error) {
+      console.error("Error updating room:", error);
+      alert("Failed to update room");
+    }
   };
 
   const openMaintenanceModal = (room) => {
@@ -241,6 +298,19 @@ const Rooms = () => {
       <div style={{ textAlign: "center", padding: "50px" }}>
         <div className="spinner-border text-primary" role="status"></div>
         <p>Loading rooms...</p>
+        <style>{`
+          .spinner-border {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #f3f4f6;
+            border-top-color: #3b82f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+          }
+          @keyframes spin {
+            to { transform: rotate(360deg); }
+          }
+        `}</style>
       </div>
     );
   }

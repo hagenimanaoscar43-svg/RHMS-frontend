@@ -6,6 +6,9 @@ import {
   FiUsers, FiDollarSign, FiRefreshCw
 } from "react-icons/fi";
 
+// ✅ CORRECTED: Single source of truth for API URL
+const API_BASE_URL = 'https://rhms-backend.onrender.com/api';
+
 const styles = {
   page: { padding: "24px", background: "#f3f4f6", minHeight: "100vh" },
   header: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20, flexWrap: "wrap", gap: 15 },
@@ -113,7 +116,8 @@ export default function Bookings() {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch("http://https://rhms-backend.onrender.com/api/hotel/bookings", {
+      // ✅ FIXED: Removed double http://
+      const response = await fetch(`${API_BASE_URL}/hotel/bookings`, {
         headers: { "Authorization": `Bearer ${token}` }
       });
       
@@ -144,7 +148,8 @@ export default function Bookings() {
     
     setUpdating(true);
     try {
-      const response = await fetch(`http://https://rhms-backend.onrender.com/api/hotel/bookings/${bookingId}/status`, {
+      // ✅ FIXED: Removed double http://
+      const response = await fetch(`${API_BASE_URL}/hotel/bookings/${bookingId}/status`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
