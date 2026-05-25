@@ -166,6 +166,136 @@ useEffect(() => {
   }, []);
 
   // Update modal visibility
+
+  // Add this useEffect INSIDE your LandingPage component, after the existing useEffects
+
+// Mobile menu functionality
+useEffect(() => {
+  const setupMobileMenu = () => {
+    const header = document.querySelector('.site-header');
+    const navLinks = document.querySelector('.nav-links');
+    
+    if (!header || !navLinks) return;
+    
+    // Check if mobile menu button already exists
+    let mobileMenuBtn = header.querySelector('.mobile-menu-btn');
+    
+    // Create button if it doesn't exist and screen is mobile
+    if (!mobileMenuBtn && window.innerWidth <= 600) {
+      mobileMenuBtn = document.createElement('button');
+      mobileMenuBtn.className = 'mobile-menu-btn';
+      mobileMenuBtn.innerHTML = '☰';
+      mobileMenuBtn.setAttribute('aria-label', 'Menu');
+      mobileMenuBtn.style.cssText = `
+        display: block;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+        padding: 8px;
+        z-index: 1001;
+      `;
+      header.insertBefore(mobileMenuBtn, navLinks);
+      
+      // Toggle menu
+      mobileMenuBtn.addEventListener('click', () => {
+        navLinks.classList.toggle('open');
+        mobileMenuBtn.innerHTML = navLinks.classList.contains('open') ? '✕' : '☰';
+        
+        // Adjust nav-links style when open
+        if (navLinks.classList.contains('open')) {
+          navLinks.style.cssText = `
+            position: fixed;
+            top: ${header.offsetHeight}px;
+            left: 0;
+            width: 100%;
+            height: calc(100vh - ${header.offsetHeight}px);
+            background: rgba(10, 37, 64, 0.98);
+            backdrop-filter: blur(14px);
+            flex-direction: column;
+            padding: 20px;
+            gap: 16px;
+            z-index: 1000;
+            overflow-y: auto;
+          `;
+        } else {
+          navLinks.style.cssText = '';
+        }
+      });
+    }
+    
+    // Close menu when clicking a link
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        const mobileBtn = header.querySelector('.mobile-menu-btn');
+        navLinks.classList.remove('open');
+        if (mobileBtn) mobileBtn.innerHTML = '☰';
+        if (navLinks) navLinks.style.cssText = '';
+      });
+    });
+  };
+  
+  setupMobileMenu();
+  
+  // Handle window resize
+  const handleResize = () => {
+    const header = document.querySelector('.site-header');
+    const navLinks = document.querySelector('.nav-links');
+    const existingBtn = header?.querySelector('.mobile-menu-btn');
+    
+    if (window.innerWidth > 600) {
+      if (navLinks) {
+        navLinks.classList.remove('open');
+        navLinks.style.cssText = '';
+      }
+      if (existingBtn) existingBtn.remove();
+    } else if (window.innerWidth <= 600 && !existingBtn && header) {
+      // Re-create button if needed
+      const newBtn = document.createElement('button');
+      newBtn.className = 'mobile-menu-btn';
+      newBtn.innerHTML = '☰';
+      newBtn.setAttribute('aria-label', 'Menu');
+      newBtn.style.cssText = `
+        display: block;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+        padding: 8px;
+        z-index: 1001;
+      `;
+      header.insertBefore(newBtn, navLinks);
+      
+      newBtn.addEventListener('click', () => {
+        navLinks.classList.toggle('open');
+        newBtn.innerHTML = navLinks.classList.contains('open') ? '✕' : '☰';
+        if (navLinks.classList.contains('open')) {
+          navLinks.style.cssText = `
+            position: fixed;
+            top: ${header.offsetHeight}px;
+            left: 0;
+            width: 100%;
+            height: calc(100vh - ${header.offsetHeight}px);
+            background: rgba(10, 37, 64, 0.98);
+            backdrop-filter: blur(14px);
+            flex-direction: column;
+            padding: 20px;
+            gap: 16px;
+            z-index: 1000;
+            overflow-y: auto;
+          `;
+        } else {
+          navLinks.style.cssText = '';
+        }
+      });
+    }
+  };
+  
+  window.addEventListener('resize', handleResize);
+  return () => window.removeEventListener('resize', handleResize);
+}, []);
   useEffect(() => {
     const modal = document.getElementById('roleModal');
     if (modal) {
