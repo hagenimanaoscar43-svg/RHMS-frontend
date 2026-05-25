@@ -11,6 +11,9 @@ const AllHotels = () => {
   const [selectedHotel, setSelectedHotel] = useState(null);
   const [showModal, setShowModal] = useState(false);
   
+  // ✅ CORRECTED: Single source of truth for API URL
+  const API_BASE_URL = 'https://rhms-backend.onrender.com/api';
+  
   // Fix: Use consistent token key
   const token = localStorage.getItem("token") || localStorage.getItem("rdbToken");
 
@@ -27,8 +30,8 @@ const AllHotels = () => {
     setLoading(true);
     setError(null);
     try {
-      // Fix: Use the correct endpoint '/api/rdb/all-hotels' instead of '/api/rdb/hotels'
-      const response = await fetch("http://https://rhms-backend.onrender.com/api/rdb/all-hotels", {
+      // ✅ FIXED: Removed the double http://
+      const response = await fetch(`${API_BASE_URL}/rdb/all-hotels`, {
         method: 'GET',
         headers: { 
           "Authorization": `Bearer ${token}`,
@@ -60,7 +63,8 @@ const AllHotels = () => {
   const updateHotelStatus = async (hotelId, status) => {
     if (window.confirm(`Are you sure you want to ${status} this hotel?`)) {
       try {
-        const response = await fetch(`http://https://rhms-backend.onrender.com/api/rdb/hotels/${hotelId}/${status}`, {
+        // ✅ FIXED: Removed the double http://
+        const response = await fetch(`${API_BASE_URL}/rdb/hotels/${hotelId}/${status}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",

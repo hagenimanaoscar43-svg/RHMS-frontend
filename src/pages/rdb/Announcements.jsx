@@ -12,6 +12,9 @@ const Announcements = () => {
   const [error, setError] = useState(null);
   const [stats, setStats] = useState({ totalHotels: 0, sentCount: 0 });
   
+  // ✅ CORRECTED: Single source of truth for API URL
+  const API_BASE_URL = 'https://rhms-backend.onrender.com/api';
+  
   // Fix: Use consistent token key
   const token = localStorage.getItem("token") || localStorage.getItem("rdbToken");
 
@@ -28,7 +31,8 @@ const Announcements = () => {
   const loadAnnouncements = async () => {
     setLoading(true);
     try {
-      const response = await fetch("http://https://rhms-backend.onrender.com/api/rdb/announcements", {
+      // ✅ FIXED: Removed the double http://
+      const response = await fetch(`${API_BASE_URL}/rdb/announcements`, {
         method: 'GET',
         headers: { 
           "Authorization": `Bearer ${token}`,
@@ -60,13 +64,14 @@ const Announcements = () => {
   // Updated loadStats function
   const loadStats = async () => {
     try {
-      const response = await fetch("http://https://rhms-backend.onrender.com/api/rdb/stats", {
+      // ✅ FIXED: Removed the double http://
+      const response = await fetch(`${API_BASE_URL}/rdb/stats`, {
         headers: { "Authorization": `Bearer ${token}` }
       });
       if (response.ok) {
         const data = await response.json();
         setStats({
-          totalHotels: data.approved_hotels || 0,  // Use approved_hotels instead of total_hotels
+          totalHotels: data.approved_hotels || 0,
           sentCount: data.approved_hotels || 0
         });
       }
@@ -85,7 +90,8 @@ const Announcements = () => {
     if (window.confirm(`Send "${title}" to ${stats.totalHotels} approved hotels?`)) {
       setSending(true);
       try {
-        const response = await fetch("http://https://rhms-backend.onrender.com/api/rdb/announcements", {
+        // ✅ FIXED: Removed the double http://
+        const response = await fetch(`${API_BASE_URL}/rdb/announcements`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

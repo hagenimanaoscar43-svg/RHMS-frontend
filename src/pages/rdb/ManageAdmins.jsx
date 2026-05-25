@@ -16,6 +16,9 @@ const ManageAdmins = () => {
     role: 'rdb' 
   });
   
+  // ✅ CORRECTED: Single source of truth for API URL
+  const API_BASE_URL = 'https://rhms-backend.onrender.com/api';
+  
   // Fix: Use consistent token key
   const token = localStorage.getItem("token") || localStorage.getItem("rdbToken");
 
@@ -32,7 +35,8 @@ const ManageAdmins = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch("http://https://rhms-backend.onrender.com/api/rdb/admins", {
+      // ✅ FIXED: Removed the double http://
+      const response = await fetch(`${API_BASE_URL}/rdb/admins`, {
         method: 'GET',
         headers: { 
           "Authorization": `Bearer ${token}`,
@@ -70,9 +74,10 @@ const ManageAdmins = () => {
     }
     
     try {
+      // ✅ FIXED: Removed the double http://
       const url = editingAdmin 
-        ? `http://https://rhms-backend.onrender.com/api/rdb/admins/${editingAdmin.admin_id}`
-        : "http://https://rhms-backend.onrender.com/api/rdb/admins";
+        ? `${API_BASE_URL}/rdb/admins/${editingAdmin.admin_id}`
+        : `${API_BASE_URL}/rdb/admins`;
       
       const method = editingAdmin ? "PUT" : "POST";
       
@@ -111,7 +116,8 @@ const ManageAdmins = () => {
   const handleDelete = async (adminId, adminName) => {
     if (window.confirm(`Are you sure you want to delete ${adminName}?`)) {
       try {
-        const response = await fetch(`http://https://rhms-backend.onrender.com/api/rdb/admins/${adminId}`, {
+        // ✅ FIXED: Removed the double http://
+        const response = await fetch(`${API_BASE_URL}/rdb/admins/${adminId}`, {
           method: "DELETE",
           headers: { 
             "Authorization": `Bearer ${token}`,
@@ -236,7 +242,7 @@ const ManageAdmins = () => {
                     <span style={{ background: admin.status === true ? '#d1fae5' : '#fef3c7', color: admin.status === true ? '#065f46' : '#92400e', padding: '4px 8px', borderRadius: '20px', fontSize: '12px' }}>
                       {admin.status === true ? 'Active' : 'Inactive'}
                     </span>
-                  </td>
+                   </td>
                   <td style={{ padding: '12px', textAlign: 'center', fontSize: '13px' }}>{new Date(admin.created_at).toLocaleDateString()}</td>
                   <td style={{ padding: '12px', textAlign: 'center' }}>
                     <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
@@ -255,8 +261,8 @@ const ManageAdmins = () => {
                         <FiTrash2 size={14} /> Delete
                       </button>
                     </div>
-                  </td>
-                </tr>
+                   </td>
+                 </tr>
               ))}
             </tbody>
           </table>
