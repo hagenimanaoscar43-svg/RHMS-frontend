@@ -124,7 +124,7 @@ const RdbLogin = () => {
         </form>
 
         <div style={styles.demoCredentials}>
-          <h4><p style={styles.demoText}>RHMS</p></h4>
+          <h2><p style={styles.demoText}>RHMS</p></h2>
         </div>
 
         <p style={styles.footer}>
