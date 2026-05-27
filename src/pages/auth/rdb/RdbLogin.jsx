@@ -125,8 +125,6 @@ const RdbLogin = () => {
 
         <div style={styles.demoCredentials}>
           <p style={styles.demoText}>Demo Credentials:</p>
-          <p style={styles.demoCreds}>Username: rdb_admin or admin@rdb.gov.rw</p>
-          <p style={styles.demoCreds}>Password: rdb@123</p>
         </div>
 
         <p style={styles.footer}>
