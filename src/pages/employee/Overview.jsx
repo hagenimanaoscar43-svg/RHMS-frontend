@@ -21,8 +21,13 @@ const Overview = () => {
 
   const fetchEmployeeData = async () => {
     try {
-      const response = await fetch("http://https://rhms-backend.onrender.com/api/employee/stats", {
-        headers: { "Authorization": `Bearer ${token}` }
+      // ✅ FIXED URL - removed "http://"
+      const response = await fetch("https://rhms-backend.onrender.com/api/employee/stats", {
+        method: "GET",
+        headers: { 
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json"
+        }
       });
       
       if (response.status === 401) {
@@ -32,15 +37,16 @@ const Overview = () => {
       }
       
       if (!response.ok) {
-        throw new Error("Failed to fetch data");
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
       
       const data = await response.json();
+      console.log("Employee data:", data); // Debug log
       setEmployee(data.employee);
       setAttendanceStats(data.attendance_stats);
       setPendingTasks(data.pending_tasks);
     } catch (err) {
-      console.error("Error:", err);
+      console.error("Error fetching employee data:", err);
       setError(err.message);
     } finally {
       setLoading(false);
@@ -110,9 +116,9 @@ const Overview = () => {
         <div style={styles.statCard}>
           <div style={styles.statIcon}>📅</div>
           <div>
-            <div style={styles.statLabel}>Present Days</div>
+            <div style={styles.statLabel}>Attendance Rate</div>
             <div style={styles.statValue}>
-              {attendanceStats?.present_days || 0} / {attendanceStats?.total_days || 0}
+              {attendanceStats?.present_days || 0} / {attendanceStats?.total_days || 0} days
             </div>
             <div style={styles.statSubtext}>
               Late: {attendanceStats?.late_days || 0} | Absent: {attendanceStats?.absent_days || 0}
@@ -174,7 +180,7 @@ const styles = {
   statCard: { background: 'white', borderRadius: '12px', padding: '20px', display: 'flex', alignItems: 'center', gap: '16px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' },
   statIcon: { fontSize: '32px' },
   statLabel: { fontSize: '12px', color: '#6b7280', marginBottom: '4px' },
-  statValue: { fontSize: '24px', fontWeight: 'bold', color: '#1f2937' },
+  statValue: { fontSize: '20px', fontWeight: 'bold', color: '#1f2937' },
   statSubtext: { fontSize: '11px', color: '#9ca3af', marginTop: '4px' },
   detailsCard: { background: 'white', borderRadius: '12px', padding: '24px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' },
   detailsGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }
